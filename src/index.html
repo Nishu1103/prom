@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration</title>
+</head>
+<body>
+    <script>
+        const url = "http://localhost:3000/register";
+
+        const registerUsers = async () => {
+            for (let i = 1; i <= 50; i++) {
+                const data = {
+                    age: 23,
+                    bio: "mkc",
+                    confirmPassword: "12345678",
+                    email: `user${i}@example.com`,  // Changing email for each iteration
+                    gender: "Male",
+                    name: `User ${i}`,  // Changing name for each iteration
+                    password: "12345678",
+                    profileImage1: "QmavoRvZXy9xTr1Wa3uFr5ozLftRGbzRbrbL316tD4aZr6",
+                    profileImage2: "QmdEZBudn2Pfz3UcBCK9pJ6B8NjPLPbpw3uq2TZbKpzzqn"
+                };
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            // Add any required authentication headers if needed
+                        },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+                    console.log(`User ${i} registered:`, result);
+                } catch (error) {
+                    console.error(`Error registering user ${i}:`, error);
+                }
+            }
+        };
+
+        // Call the function to register users
+        registerUsers();
+    </script>
+</body>
+</html>

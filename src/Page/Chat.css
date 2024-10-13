@@ -1,0 +1,74 @@
+/* Chat Container */
+.chat-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f8f8f8;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Matches List */
+.matches-list {
+    width: 90%;
+    max-width: 600px;
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    height: 100%;
+}
+
+/* Header */
+.matches-list h3 {
+    font-size: 24px;
+    color: #ff6b6b;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Match List - Styling individual matches */
+.matches-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.matches-list li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 15px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #eaeaea;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.matches-list li:hover {
+    background-color: #f2f2f2;
+}
+
+/* Profile Images */
+.profile-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 2px solid #ff6b6b;
+}
+
+/* Match Name */
+.matches-list li span {
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+}
+
+/* No Matches Text */
+.matches-list p {
+    font-size: 18px;
+    color: #999;
+    margin-top: 20px;
+}

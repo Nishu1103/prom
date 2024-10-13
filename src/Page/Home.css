@@ -1,0 +1,35 @@
+/* General styles for the Home page */
+.home-content {
+    padding: 10px 20px 80px; /* Add padding to avoid overlap with top and bottom navbars */
+    text-align: center;      /* Center the text */
+    height: 80vh;
+  }
+  
+  .home-content h1 {
+    font-size: 28px;
+    color: #ff4a6e;  /* SF Promnight's primary color */
+    margin-bottom: 20px;
+  }
+  
+  .home-content p {
+    font-size: 18px;
+    color: #333;
+    line-height: 1.6;
+  }
+  
+  /* Responsive design: Adjust padding for smaller screens */
+  @media (max-width: 768px) {
+    .home-content {
+      padding: 20px 15px 20px;
+      height: 80vh;
+    }
+  
+    .home-content h1 {
+      font-size: 24px;
+    }
+  
+    .home-content p {
+      font-size: 16px;
+    }
+  }
+  

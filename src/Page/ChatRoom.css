@@ -1,0 +1,126 @@
+.chat-room {
+    /* width: 100%; */
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 20px;
+    overflow-x: hidden;
+}
+
+.messages {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+.message {
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    max-width: 70%;
+    word-wrap: break-word;
+    align-self: flex-end;
+}
+
+.incoming {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+    color: #000;
+}
+
+.outgoing {
+    background-color: #007bff;
+    color: #fff;
+    align-self: flex-end;
+}
+.prom-night-btn {
+    background-color: #ff4081;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px 0;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.prom-night-btn:hover {
+    background-color: #e50070;
+}
+
+/* Modal Styles */
+.modal {
+    background: white;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-overlay {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.confirm-btn, .cancel-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.confirm-btn {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.cancel-btn {
+    background-color: #f44336;
+    color: white;
+}
+button {
+    padding: 10px 15px;
+    background-color: #007bff; /* Bootstrap primary color */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.prom-request {
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #ffcc00; /* Prom request border color */
+    background-color: #fff8e1; /* Light yellow background */
+    border-radius: 5px;
+    text-align: center;
+}
+
+.prom-request h4 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.prom-request button {
+    margin: 0 5px; /* Spacing between buttons */
+}
