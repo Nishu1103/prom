@@ -62,7 +62,7 @@ const SignUp = () => {
     try {
         const response = await axios.post('http://localhost:3000/register', formData, {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             }
         });
         setUser(response.data); // Save the user in context

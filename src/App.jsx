@@ -5,6 +5,8 @@ import SignIn from './Auth/SignIn';
 import Home from './Page/Home';
 import Chat from './Page/Chat';
 import ChatRoom from './Page/ChatRoom';
+import TopNavbar from './Page/TopNavbar';   
+import BottomNavbar from './Page/BottomNavbar';
 import Notification from './Page/Notification';
 import { useEffect } from 'react';
 import { useContext } from 'react';
@@ -57,6 +59,7 @@ function App() {
     return (
 
         <Router>
+            <TopNavbar/>
             <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -65,6 +68,7 @@ function App() {
                 <Route path="/chatroom/:id" element={<ChatRoom />} />
                 <Route path="/notifications" element={<Notification />} />
             </Routes>
+            <BottomNavbar/>
         </Router>
 
     );

@@ -204,7 +204,8 @@ export const UserProvider = ({ children }) => {
                     },
                 });
                 if (response.data && Array.isArray(response.data.data)) {
-                    setUsers(response.data.data); // Update users from the data property
+                    setUsers(response.data.data); 
+                    console.log(response.data.data)// Update users from the data property
                 } else {
                     console.error('Fetched data is not an array', response.data);
                     setError('Fetched data is not in the expected format.');

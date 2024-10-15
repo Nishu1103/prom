@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import Modal from 'react-modal'; // Assuming you're using react-modal or similar
-
+import "./Notification.css";
 const Notification = () => {
     const { user } = useContext(UserContext);
     const [promRequests, setPromRequests] = useState([]);

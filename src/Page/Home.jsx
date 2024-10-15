@@ -18,13 +18,12 @@ const Home = () => {
   }
   return (
     <div>
-      <TopNavbar />
+      {/* <TopNavbar /> */}
       <div className="home-content">
         <h1>Welcome to SF Promnight</h1>
-        {/* <p>Explore more features from the bottom navigation bar.</p> */}
         <Swipe/>
       </div>
-      <BottomNavbar />
+      {/* <BottomNavbar /> */}
     </div>
   );
 };

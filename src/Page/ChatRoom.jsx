@@ -141,28 +141,31 @@ const ChatRoom = () => {
     const { user } = useContext(UserContext);
     const [isModalOpen, setIsModalOpen] = useState(false); 
     const socket = useRef(null);
+    const messagesEndRef = useRef(null);
     const hasShownNotification = useRef(false);
     const hasShownNotificationrequest=useRef(false);
     const [promRequest, setPromRequest] = useState(null);
     const userData = localStorage.getItem('user');
-    const parsedUser = JSON.parse(userData); // Parse the user data
-    const token = parsedUser.token; // Get token
+    const parsedUser = JSON.parse(userData);  
+    const token = parsedUser.token;  
     const ids = localStorage.getItem('ids');
-    // console.log(typeof ids, ids);  // Check if it's a string and properly formatted
+    // console.log(typeof ids, ids);   
     // console.log(localStorage.getItem('ids'), "ddddDDDD")
     const storedData = JSON.parse(ids);
     // console.log(storedData, "Parsed Data");
     const userId = storedData.data.id;
+    const userName = storedData.data.name;
+    console.log(userName)
     console.log(userId, "sender id");
 
     useEffect(() => {
-        // Initialize socket connection only once
+        
         socket.current = io('http://localhost:3001');
 
-        // Register the sender to the socket room
+        
         socket.current.emit('registerUser', userId);
 
-        // Listen for incoming messages
+        
         socket.current.on('receiveMessage', (data) => {
             if (data.senderId === id || data.receiverId === id) {
                 setMessages((prevMessages) => [...prevMessages, data]);
@@ -184,8 +187,8 @@ const ChatRoom = () => {
                         Authorization: `Bearer ${token}`,
                     },
                     params: {
-                        senderId: userId, // Include senderId in the request
-                        receiverId: id, // Receiver userId from URL params
+                        senderId: userId,  
+                        receiverId: id,  
                     }
                 });
                 setMessages(response.data.messages);
@@ -199,12 +202,18 @@ const ChatRoom = () => {
         fetchMessages();
     }, [id, token, userId]);
 
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [messages]);
+
     const sendMessage = async () => {
         if (message.trim()) {
             try {
                 await axios.post('http://localhost:3000/send-message', {
                     receiverId: id,
-                    senderId: userId, // Include senderId when sending the message
+                    senderId: userId,  
                     message: message
                 }, {
                     headers: {
@@ -212,14 +221,14 @@ const ChatRoom = () => {
                     }
                 });
 
-                // Emit the message via socket
+              
                 socket.current.emit('sendMessage', {
                     receiverId: id,
                     message: message,
                     senderId: userId
                 });
 
-                // Update local message list
+               
                 setMessages((prevMessages) => [
                     ...prevMessages,
                     { senderId: userId, message }
@@ -269,12 +278,12 @@ const ChatRoom = () => {
                 // If a new request is received, set it to state
                 setPromRequest(newRequests[0]);
                 setIsModalOpen(true); 
-                hasShownNotificationrequest.current = true;// Open the modal to show the request
+                hasShownNotificationrequest.current = true;
             }
         } catch (error) {
             console.error("Error checking prom night request:", error);
         }
-    }, [userId, token]); // Add userId and token as dependencies
+    }, [userId, token]);  
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -287,7 +296,7 @@ const ChatRoom = () => {
     const acceptPromNight = async () => {
         try {
             const response = await axios.post('http://localhost:3000/acceptPromNight', {
-                requestId: promRequest._id // Ensure you have the request ID
+                requestId: promRequest._id 
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -296,7 +305,7 @@ const ChatRoom = () => {
 
             if (response.data.success) {
                 alert('Prom night request accepted!');
-                setPromRequest(null); // Clear the request after accepting
+                setPromRequest(null);   
             }
         } catch (error) {
             console.error("Error accepting prom night request:", error);
@@ -306,7 +315,7 @@ const ChatRoom = () => {
     const cancelPromNight = async () => {
         try {
             const response = await axios.post('http://localhost:3000/cancelPromNight', {
-                requestId: promRequest._id // Ensure you have the request ID
+                requestId: promRequest._id  
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -315,7 +324,7 @@ const ChatRoom = () => {
 
             if (response.data.success) {
                 alert('Prom night request canceled!');
-                setPromRequest(null); // Clear the request after canceling
+                setPromRequest(null);  
             }
         } catch (error) {
             console.error("Error canceling prom night request:", error);
@@ -323,11 +332,18 @@ const ChatRoom = () => {
     };
     const closeModal = () => {
         setIsModalOpen(false);
-        setPromRequest(null); // Clear the request after closing the modal
+        setPromRequest(null);  
     };
     return (
         <div className="chat-room">
-            <h3>Chat with User {id}</h3>
+            <h3 style={{position:"fixed",
+            top:"80px",
+            left:0,
+            right:0,
+            color:"black",
+            textAlign:"center",
+            padding:"10px",
+            }}>Chat with {userName}</h3>
             {loading ? (
                 <p>Loading messages...</p>
             ) : (
@@ -337,21 +353,26 @@ const ChatRoom = () => {
                             {msg.message}
                         </div>
                     ))}
+                    <div ref={messagesEndRef}></div>
                 </div>
             )}
-            <input
+            <div className="hello" style={{display:"flex"
+
+            }}>
+
+            <input className='input-chat'
                 type="text"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Type a message..."
             />
-            <button onClick={sendMessage}>Send</button>
+            <button className='chatbutton' onClick={sendMessage}>Send</button>
+            </div>
             <button onClick={requestPromNight}>Request Prom Night</button>
             <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
                 <h2>New Prom Night Request!</h2>
                 <p>User {promRequest?.requester_id} has sent you a request.</p>
                 <button onClick={closeModal}>Close</button>
-                {/* Additional actions like Accept/Reject can be added here */}
             </Modal>
 
             {promRequest && (

@@ -3,22 +3,28 @@ import { useSwipeable } from 'react-swipeable';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import './Swipe.css';
+import { FcLike } from "react-icons/fc";
+import { ImCross } from "react-icons/im";
+import { GiReturnArrow } from "react-icons/gi";
 
 const Swipe = () => {
-    const { users,setMatches } = useContext(UserContext); // assuming users are fetched and provided in UserContext
+    const { users, setMatches } = useContext(UserContext);
     const [currentIndex, setCurrentIndex] = useState(0);
+    const [animation, setAnimation] = useState(''); // New state to handle animation
+    const { user } = useContext(UserContext);
     const [error, setError] = useState(null);
-    const { user } = useContext(UserContext); // assuming UserContext contains user data and token
+    const [swipeText, setSwipeText] = useState('');
+    const userData = localStorage.getItem('user');
+    const parsedUser = userData ? JSON.parse(userData) : null;
+    const token = parsedUser ? parsedUser.token : null;
+    console.log(token)
 
-    const token = user?.token;
 
-    // Function to handle liking a user
     const likeUser = async (likedUserId) => {
-        if (!user || !user.token) {
+        if (!user || !token) {
             setError('User is not authenticated.');
             return;
         }
-
         try {
             const response = await axios.post(
                 'http://localhost:3000/like',
@@ -29,13 +35,11 @@ const Swipe = () => {
                     },
                 }
             );
-
             if (response.data === "It's a match!") {
                 alert('It\'s a match!');
             } else {
                 alert('User liked successfully!');
             }
-
             setMatches((prevMatches) => [...prevMatches, likedUserId]);
         } catch (error) {
             console.error('Error liking user', error);
@@ -43,13 +47,11 @@ const Swipe = () => {
         }
     };
 
-    // Function to handle disliking a user
     const dislikeUser = async (dislikedUserId) => {
-        if (!user || !user.token) {
+        if (!user || !token) {
             setError('User is not authenticated.');
             return;
         }
-
         try {
             await axios.post(
                 'http://localhost:3000/dislike',
@@ -67,25 +69,36 @@ const Swipe = () => {
         }
     };
 
-    // Handle the user swipe actions
     const handleLike = (userId) => {
-        likeUser(userId); // Call like API when user swipes right or clicks like button
-        nextUser();
+       
+        setAnimation('swipe-right'); // Trigger right swipe animation
+        setSwipeText('Like!');
+        setTimeout(() => {
+            likeUser(userId);
+            nextUser();
+            setAnimation(''); // Reset animation after transition
+            setSwipeText('');
+        }, 500); // Match the animation duration
     };
 
     const handleDislike = () => {
-        dislikeUser(users[currentIndex].id); // Call dislike API
-        nextUser(); // Move to the next user
+        setAnimation('swipe-left'); // Trigger left swipe animation
+        setSwipeText('Nope');
+        setTimeout(() => {
+            dislikeUser(users[currentIndex].id);
+            nextUser();
+            setAnimation(''); 
+            setSwipeText('');
+        }, 500); // Match the animation duration
     };
 
-    // Move to the next user
     const nextUser = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 1) % users.length); // Cycle through users
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % users.length);
     };
 
     const handlers = useSwipeable({
-        onSwipedLeft: handleDislike, // Dislike on left swipe
-        onSwipedRight: () => handleLike(users[currentIndex].id), // Like on right swipe
+        onSwipedLeft: handleDislike,
+        onSwipedRight: () => handleLike(users[currentIndex].id),
         preventDefaultTouchmoveEvent: true,
         trackMouse: true,
     });
@@ -95,20 +108,24 @@ const Swipe = () => {
     }
 
     const currentUser = users[currentIndex];
+    console.log(currentUser)
 
     return (
-        <div className="swipe-container" {...handlers}>
-            <div className="card">
-                <img src={currentUser.image} alt={currentUser.name} className="user-image" />
+        <div className={`swipe-container ${animation}`} {...handlers}>
+            <div className={`card ${animation}`}>
+            <img src={`https://gateway.pinata.cloud/ipfs/${currentUser.profile_image}`} alt={currentUser.name} className="user-image" />
+
                 <div className="user-info">
                     <h3>{currentUser.name}</h3>
                     <p>{currentUser.bio}</p>
                 </div>
                 <div className="action-buttons">
-                    <button onClick={handleDislike} className="dislike-button">Dislike</button>
-                    <button onClick={() => handleLike(currentUser.id)} className="like-button">Like</button>
+                    <ImCross onClick={handleDislike} className="dislike-button"/>
+                    <FcLike onClick={() => handleLike(currentUser.id)} className="like-button"/> 
+                    <GiReturnArrow onClick={() => handleLike(currentUser.id)} className="reverse-button"/>
                 </div>
             </div>
+            {swipeText && <div className={`swipe-text ${animation}`}>{swipeText}</div>}
         </div>
     );
 };
