@@ -5,7 +5,7 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import './Auth.css';
 import { useNavigate } from 'react-router-dom';
-
+import createToast from '../utils/toast';
 const SignIn = () => {
   const { isAuthorized, setUsers,setUser } = useContext(UserContext);
   const navigate=useNavigate();
@@ -37,11 +37,13 @@ const SignIn = () => {
       // setUsers(response.data);
       localStorage.setItem('user', JSON.stringify(response.data));
       console.log(localStorage.getItem('user', JSON.stringify(response.data)))
-      alert('Login successful');
+      // alert('Login successful');
+      createToast("Login successful","success")
       // setIsAuthorized(true); // Set isAuthorized to true
       navigate('/home');
     } catch (error) {
-      alert('Error during login',error);
+      // alert('Error during login',error);
+      createToast("Error during login", "error")
       console.error('Error during login', error);
       // setIsAuthorized(false);
     } finally {

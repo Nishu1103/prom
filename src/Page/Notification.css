@@ -1,4 +1,4 @@
-/* Main notification container */
+ 
 .notification {
     background-color: #f9f9f9;
     padding: 20px;
@@ -11,7 +11,7 @@
     font-family: Arial, sans-serif;
 }
 
-/* Title styling */
+ 
 .notification h3 {
     font-size: 24px;
     color: #333;
@@ -19,20 +19,19 @@
     text-align: center;
 }
 
-/* No requests message */
+ 
 .notification p {
     font-size: 18px;
     color: #666;
     text-align: center;
 }
-
-/* List of requests */
+ 
 .notification ul {
     list-style-type: none;
     padding: 0;
 }
 
-/* Individual request item */
+ 
 .notification li {
     background-color: #fff;
     border-radius: 8px;
@@ -44,13 +43,13 @@
     align-items: center;
 }
 
-/* Request message */
+ 
 .notification li span {
     font-size: 16px;
     color: #333;
 }
 
-/* Accept button */
+ 
 .notification li button {
     background-color: #4CAF50;
     color: white;
@@ -65,7 +64,7 @@
     background-color: #45a049;
 }
 
-/* Modal styling */
+ 
 .ReactModal__Content {
     background-color: #fff;
     border-radius: 8px;
@@ -76,21 +75,21 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Modal title */
+ 
 .ReactModal__Content h2 {
     font-size: 22px;
     color: #333;
     margin-bottom: 20px;
 }
 
-/* Modal prompt */
+ 
 .ReactModal__Content p {
     font-size: 16px;
     color: #555;
     margin-bottom: 20px;
 }
 
-/* Modal buttons */
+ 
 .ReactModal__Content button {
     padding: 10px 20px;
     border: none;
@@ -100,7 +99,7 @@
     transition: background-color 0.3s ease;
 }
 
-/* Accept button in modal */
+ 
 .ReactModal__Content button:first-child {
     background-color: #4CAF50;
     color: white;
@@ -110,7 +109,7 @@
     background-color: #45a049;
 }
 
-/* Cancel button in modal */
+ 
 .ReactModal__Content button:last-child {
     background-color: #f44336;
     color: white;

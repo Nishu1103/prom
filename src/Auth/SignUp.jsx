@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import './Auth.css';
+import createToast from '../utils/toast';
 // import { createLogger } from 'vite';
 
 const SignUp = () => {
@@ -66,10 +67,12 @@ const SignUp = () => {
             }
         });
         setUser(response.data); // Save the user in context
-        alert('User Registered Successfully!');
+        // alert('User Registered Successfully!');
+        createToast("User Registered Successfully!","success")
         navigate('/');
     } catch (error) {
-        alert('Error during registration');
+        // alert('Error during registration');
+        createToast("Error during registration","error")
         console.error(error);
     } finally {
         setSubmitting(false);
@@ -134,7 +137,8 @@ const handleImageChange = async (event, setFieldValue) => {
     setFieldValue('profileImage1', uploadedHashes[0]); // First image hash
     setFieldValue('profileImage2', uploadedHashes[1]); // Second image hash
   } catch (error) {
-    alert('Error uploading images. Please try again.');
+    // alert('Error uploading images. Please try again.');
+    createToast("Error uploading images. Please try again.","error")
     console.log(error);
   }
 };
@@ -161,6 +165,7 @@ const handleImageChange = async (event, setFieldValue) => {
       return ipfsHash; // Return the IPFS hash
     } catch (error) {
       console.error('Error uploading to Pinata:', error);
+
       throw error; // Rethrow the error for handling in the calling function
     }
   };

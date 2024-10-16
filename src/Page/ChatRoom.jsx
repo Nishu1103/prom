@@ -133,8 +133,9 @@ import { UserContext } from '../context/UserContext';
 import "./ChatRoom.css";
 import Modal from 'react-modal';
 import { useCallback } from 'react';
+import createToast from '../utils/toast';
 const ChatRoom = () => {
-    const { id } = useParams(); // Receiver user ID from URL params
+    const { id } = useParams();  
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
     const [loading, setLoading] = useState(true);
@@ -150,7 +151,7 @@ const ChatRoom = () => {
     const token = parsedUser.token;  
     const ids = localStorage.getItem('ids');
     // console.log(typeof ids, ids);   
-    // console.log(localStorage.getItem('ids'), "ddddDDDD")
+    console.log(localStorage.getItem('ids'), "ddddDDDD")
     const storedData = JSON.parse(ids);
     // console.log(storedData, "Parsed Data");
     const userId = storedData.data.id;
@@ -236,6 +237,7 @@ const ChatRoom = () => {
                 setMessage('');
             } catch (error) {
                 console.error("Error sending message:", error);
+                createToast("Error sending message:","error")
             }
         }
     };
@@ -252,11 +254,13 @@ const ChatRoom = () => {
             });
 
             if (response.data.success) {
-                alert('Prom night request sent!');
+                // alert('Prom night request sent!');
+                createToast("Prom night request sent!","success")
                 setPromRequest({ senderId: userId, receiverId: id });
             }
         } catch (error) {
             console.error("Error sending prom night request:", error);
+            createToast("Error sending prom night request:","error")
         }
     };
 
@@ -304,11 +308,13 @@ const ChatRoom = () => {
             });
 
             if (response.data.success) {
-                alert('Prom night request accepted!');
+                // alert('Prom night request accepted!');
+                createToast("Prom night request accepted!","success")
                 setPromRequest(null);   
             }
         } catch (error) {
             console.error("Error accepting prom night request:", error);
+            createToast("Error accepting prom night request:","error")
         }
     };
 
@@ -323,11 +329,13 @@ const ChatRoom = () => {
             });
 
             if (response.data.success) {
-                alert('Prom night request canceled!');
+                // alert('Prom night request canceled!');
+                createToast("Prom night request canceled!","success");
                 setPromRequest(null);  
             }
         } catch (error) {
             console.error("Error canceling prom night request:", error);
+            createToast("Error canceling prom night request:","error")
         }
     };
     const closeModal = () => {
@@ -368,7 +376,18 @@ const ChatRoom = () => {
             />
             <button className='chatbutton' onClick={sendMessage}>Send</button>
             </div>
-            <button onClick={requestPromNight}>Request Prom Night</button>
+            <button style={{
+                position:"absolute",
+                top:"50%",
+                left:"-60px",
+                transform:"translateY(-50%)rotate(90deg)",
+                backgroundColor:"#4CAF50",
+                color:"#fff",
+                border:"none",
+                padding:"10px 20px",
+                cursor:"pointer",
+
+            }} onClick={requestPromNight}>Request Prom Night</button>
             <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
                 <h2>New Prom Night Request!</h2>
                 <p>User {promRequest?.requester_id} has sent you a request.</p>

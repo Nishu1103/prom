@@ -12,6 +12,8 @@ import { useEffect } from 'react';
 import { useContext } from 'react';
 import { UserContext } from './context/UserContext';
 import axios from 'axios';
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 // import { useNavigate } from 'react-router-dom';
 function App() {
     // const nevigate=useNavigate();  
@@ -69,6 +71,7 @@ function App() {
                 <Route path="/notifications" element={<Notification />} />
             </Routes>
             <BottomNavbar/>
+            <ToastContainer />
         </Router>
 
     );

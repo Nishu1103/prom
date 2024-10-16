@@ -1,6 +1,6 @@
-import BottomNavbar from './BottomNavbar'; // bottom navigation component
-import TopNavbar from './TopNavbar'; // top navigation component
-import './Home.css'; // Add CSS for styling
+import BottomNavbar from './BottomNavbar';  
+import TopNavbar from './TopNavbar';  
+import './Home.css';  
 import Swipe from "./Swipe"
 import { UserContext } from '../context/UserContext';
 import { useContext } from 'react';

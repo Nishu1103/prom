@@ -6,11 +6,12 @@ import './Swipe.css';
 import { FcLike } from "react-icons/fc";
 import { ImCross } from "react-icons/im";
 import { GiReturnArrow } from "react-icons/gi";
+import createToast from '../utils/toast';
 
 const Swipe = () => {
     const { users, setMatches } = useContext(UserContext);
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [animation, setAnimation] = useState(''); // New state to handle animation
+    const [animation, setAnimation] = useState('');  
     const { user } = useContext(UserContext);
     const [error, setError] = useState(null);
     const [swipeText, setSwipeText] = useState('');
@@ -36,9 +37,12 @@ const Swipe = () => {
                 }
             );
             if (response.data === "It's a match!") {
-                alert('It\'s a match!');
+
+                // alert('It\'s a match!');
+                createToast("It's a match!","success")
             } else {
-                alert('User liked successfully!');
+                // alert('User liked successfully!');
+                createToast("User liked successfully!","success")
             }
             setMatches((prevMatches) => [...prevMatches, likedUserId]);
         } catch (error) {
@@ -62,7 +66,8 @@ const Swipe = () => {
                     },
                 }
             );
-            alert('User disliked successfully!');
+            // alert('User disliked successfully!');
+            createToast("User disliked successfully!","success")
         } catch (error) {
             console.error('Error disliking user', error);
             setError('Error disliking user. Please try again later.');
@@ -71,25 +76,25 @@ const Swipe = () => {
 
     const handleLike = (userId) => {
        
-        setAnimation('swipe-right'); // Trigger right swipe animation
+        setAnimation('swipe-right');  
         setSwipeText('Like!');
         setTimeout(() => {
             likeUser(userId);
             nextUser();
-            setAnimation(''); // Reset animation after transition
+            setAnimation('');  
             setSwipeText('');
-        }, 500); // Match the animation duration
+        }, 300);  
     };
 
     const handleDislike = () => {
-        setAnimation('swipe-left'); // Trigger left swipe animation
+        setAnimation('swipe-left');  
         setSwipeText('Nope');
         setTimeout(() => {
             dislikeUser(users[currentIndex].id);
             nextUser();
             setAnimation(''); 
             setSwipeText('');
-        }, 500); // Match the animation duration
+        }, 300);  
     };
 
     const nextUser = () => {

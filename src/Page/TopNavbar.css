@@ -1,9 +1,9 @@
-/* Top Navbar Styles */
+ 
 .top-navbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: #ff4a6e; /* Promnight primary color */
+  background-color: #ff4a6e; 
   padding: 15px 20px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: sticky;

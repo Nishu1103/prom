@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import './BottomNavbar.css'; // Add CSS for styling
+import './BottomNavbar.css'; 
 
 const BottomNavbar = () => {
   return (

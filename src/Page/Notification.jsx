@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
-import Modal from 'react-modal'; // Assuming you're using react-modal or similar
+import Modal from 'react-modal';  
 import "./Notification.css";
 const Notification = () => {
     const { user } = useContext(UserContext);
@@ -28,32 +28,32 @@ const Notification = () => {
                         Authorization: `Bearer ${token}`,
                     }
                 });
-                setPromRequests(response.data.promRequests); // Set the list of prom requests
+                setPromRequests(response.data.promRequests);  
             } catch (error) {
                 console.error("Error fetching prom requests:", error);
             }
         };
 
         fetchPromRequests();
-        const interval = setInterval(fetchPromRequests, 10000); // Fetch every 10 seconds
+        const interval = setInterval(fetchPromRequests, 10000); 
         return () => clearInterval(interval);
     }, [userId, token]);
 
     const openModal = (request) => {
-        setSelectedRequest(request); // Set the selected request for acceptance
-        setIsModalOpen(true); // Open the modal
+        setSelectedRequest(request); 
+        setIsModalOpen(true); 
     };
 
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedRequest(null); // Clear the selected request
+        setSelectedRequest(null);  
     };
 
     const acceptRequest = async () => {
         if (selectedRequest) {
             try {
                 const response = await axios.post('http://localhost:3000/acceptPromNight', {
-                    requestId: selectedRequest.id, // Use the request ID to accept
+                    requestId: selectedRequest.id,  
                 }, {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const Notification = () => {
             } catch (error) {
                 console.error("Error accepting prom night request:", error);
             } finally {
-                closeModal(); // Close the modal after acceptance
+                closeModal();  
             }
         }
     };
@@ -91,7 +91,7 @@ const Notification = () => {
             } catch (error) {
                 console.error("Error cancelling prom night request:", error);
             } finally {
-                closeModal(); // Close the modal after cancellation
+                closeModal();  
             }
         }
     };

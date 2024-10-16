@@ -1,4 +1,4 @@
-/* Bottom Navbar Styles */
+
 .bottom-navbar {
   position: fixed;
   bottom: 0;
@@ -6,9 +6,9 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #ff6f81; /* Slightly lighter than top navbar */
+  background-color: #ff6f81; 
   padding: 10px 0;
-  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); /* Shadow at the top */
+  box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1); 
   z-index: 10;
   height: 60px;
 }
