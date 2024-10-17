@@ -1,4 +1,4 @@
- 
+/*  
 .top-navbar {
   display: flex;
   align-items: center;
@@ -38,5 +38,90 @@
 
   .logo {
     font-size: 24px;
+  }
+} */
+/* Container for the top navbar */
+.top-navbar {
+  /* width: 98%; */
+  height: 70px;
+  background-color: #822b61; /* Prom night theme color */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  position: relative;
+  z-index: 1000;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Styling for the logo */
+.top-navbar .logo img {
+  height: 50px;
+  width: auto;
+  max-width: 100%;
+}
+
+/* Title styling */
+.top-navbar .title {
+  font-size: 24px;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%); /* Center the title */
+}
+
+/* Bubble background effect */
+.top-navbar::before, .top-navbar::after {
+  content: '';
+  position: absolute;
+  background-color: rgba(255, 255, 255, 0.3); /* White bubbles with transparency */
+  border-radius: 50%;
+  z-index: -1; /* Ensure bubbles are behind the navbar content */
+  animation: float 8s ease-in-out infinite;
+  opacity: 0.7;
+}
+
+/* .top-navbar::before {
+  width: 150px;
+  height: 150px;
+  top: -50px;
+  left: 20%;
+  animation-duration: 6s;
+}
+
+.top-navbar::after {
+  width: 200px;
+  height: 200px;
+  top: -70px;
+  left: 70%;
+  animation-duration: 4s;
+} */
+
+/* Animation for floating effect */
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .top-navbar {
+    padding: 0 10px;
+    /* width: 100%; */
+  }
+
+  .top-navbar .title {
+    font-size: 18px; /* Adjust title size for smaller screens */
   }
 }

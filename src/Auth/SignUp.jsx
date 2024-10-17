@@ -6,6 +6,7 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import './Auth.css';
 import createToast from '../utils/toast';
+import { Link } from 'react-router-dom';
 // import { createLogger } from 'vite';
 
 const SignUp = () => {
@@ -23,7 +24,7 @@ const SignUp = () => {
     profileImage1: '',
     profileImage2: ''
   };
-  
+
 
   const validationSchema = Yup.object({
     name: Yup.string().required('Required'),
@@ -38,110 +39,110 @@ const SignUp = () => {
     profileImage1: Yup.string().required('Required'),
     profileImage2: Yup.string().required('Required'),
   });
-  
+
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const formData = new FormData();
 
     // Append user details to formData
     for (const key in values) {
-        if (key === 'profileImage1' || key === 'profileImage2') {
-            formData.append(key, values[key]); // Directly append the hash strings
-        } else {
-            formData.append(key, values[key]);
-        }
+      if (key === 'profileImage1' || key === 'profileImage2') {
+        formData.append(key, values[key]); // Directly append the hash strings
+      } else {
+        formData.append(key, values[key]);
+      }
     }
 
     // Log FormData entries for debugging
     for (let [key, value] of formData.entries()) {
-        console.log(key, value);
+      console.log(key, value);
     }
 
     // Log form values
     console.log('Form Values:', values);
 
     try {
-        const response = await axios.post('http://localhost:3000/register', formData, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        });
-        setUser(response.data); // Save the user in context
-        // alert('User Registered Successfully!');
-        createToast("User Registered Successfully!","success")
-        navigate('/');
+      const response = await axios.post('http://localhost:3000/register', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      setUser(response.data); // Save the user in context
+      // alert('User Registered Successfully!');
+      createToast("User Registered Successfully!", "success")
+      navigate('/');
     } catch (error) {
-        // alert('Error during registration');
-        createToast("Error during registration","error")
-        console.error(error);
+      // alert('Error during registration');
+      createToast("Error during registration", "error")
+      console.error(error);
     } finally {
-        setSubmitting(false);
+      setSubmitting(false);
     }
-};
-
-  
+  };
 
 
-//   const handleSubmit = async (values, { setSubmitting }) => {
-//     const formData = new FormData();
-    
-
-//     // Append user details to formData
-//     for (const key in values) {
-//         if (Array.isArray(values[key])) {
-//             values[key].forEach((file) => {
-//                 formData.append('profileImage', file); // Ensure you're using the same key
-//             });
-//         } else {
-//             formData.append(key, values[key]);
-//         }
-//     }
-//     console.log(formData,"formdata")
-//     // Log the FormData entries for debugging
-//     for (let [key, value] of formData.entries()) {
-//         console.log(key, value);
-//     }
-
-//     try {
-//         const response = await axios.post('http://192.168.12.1:3000/register', formData, {
-//             headers: {
-//                 'Content-Type': 'multipart/form-data'
-//             }
-//         });
-//         setUser(response.data); // Save the user in context
-//         alert('User Registered Successfully!');
-//         navigate('/');
-//     } catch (error) {
-//         alert('Error during registration');
-//         console.error(error);
-//     } finally {
-//         setSubmitting(false);
-//     }
-// };
 
 
-const handleImageChange = async (event, setFieldValue) => {
-  const files = Array.from(event.currentTarget.files);
+  //   const handleSubmit = async (values, { setSubmitting }) => {
+  //     const formData = new FormData();
 
-  // Check that exactly two files are uploaded
-  if (files.length !== 2) {
-    alert('Please upload exactly two images.');
-    return;
-  }
 
-  try {
-    // Upload images to Pinata and get their hashes
-    const uploadedHashes = await Promise.all(files.map(file => uploadToPinata(file)));
-    console.log('Uploaded IPFS Hashes:', uploadedHashes);
-    // Set the hashes to the respective fields
-    setFieldValue('profileImage1', uploadedHashes[0]); // First image hash
-    setFieldValue('profileImage2', uploadedHashes[1]); // Second image hash
-  } catch (error) {
-    // alert('Error uploading images. Please try again.');
-    createToast("Error uploading images. Please try again.","error")
-    console.log(error);
-  }
-};
+  //     // Append user details to formData
+  //     for (const key in values) {
+  //         if (Array.isArray(values[key])) {
+  //             values[key].forEach((file) => {
+  //                 formData.append('profileImage', file); // Ensure you're using the same key
+  //             });
+  //         } else {
+  //             formData.append(key, values[key]);
+  //         }
+  //     }
+  //     console.log(formData,"formdata")
+  //     // Log the FormData entries for debugging
+  //     for (let [key, value] of formData.entries()) {
+  //         console.log(key, value);
+  //     }
+
+  //     try {
+  //         const response = await axios.post('http://192.168.12.1:3000/register', formData, {
+  //             headers: {
+  //                 'Content-Type': 'multipart/form-data'
+  //             }
+  //         });
+  //         setUser(response.data); // Save the user in context
+  //         alert('User Registered Successfully!');
+  //         navigate('/');
+  //     } catch (error) {
+  //         alert('Error during registration');
+  //         console.error(error);
+  //     } finally {
+  //         setSubmitting(false);
+  //     }
+  // };
+
+
+  const handleImageChange = async (event, setFieldValue) => {
+    const files = Array.from(event.currentTarget.files);
+
+    // Check that exactly two files are uploaded
+    if (files.length !== 2) {
+      alert('Please upload exactly two images.');
+      return;
+    }
+
+    try {
+      // Upload images to Pinata and get their hashes
+      const uploadedHashes = await Promise.all(files.map(file => uploadToPinata(file)));
+      console.log('Uploaded IPFS Hashes:', uploadedHashes);
+      // Set the hashes to the respective fields
+      setFieldValue('profileImage1', uploadedHashes[0]); // First image hash
+      setFieldValue('profileImage2', uploadedHashes[1]); // Second image hash
+    } catch (error) {
+      // alert('Error uploading images. Please try again.');
+      createToast("Error uploading images. Please try again.", "error")
+      console.log(error);
+    }
+  };
 
 
   const uploadToPinata = async (file) => {
@@ -218,6 +219,15 @@ const handleImageChange = async (event, setFieldValue) => {
             <button type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Signing Up...' : 'Sign Up'}
             </button>
+            <div className="jjj">
+
+            </div>
+            <button >
+              <Link to="/" className="link-button">
+                Already have an account? Sign in
+              </Link>
+            </button>
+
           </Form>
         )}
       </Formik>
