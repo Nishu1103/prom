@@ -78,7 +78,7 @@ import createToast from '../utils/toast';
 import "./Chat.css";
 
 const Chat = () => {
-    const { user } = useContext(UserContext);
+    const { user , isAuthorized, setIsAuthorized} = useContext(UserContext);
     const navigate = useNavigate();  
 
     const [matches, setMatches] = useState([]);
@@ -88,11 +88,11 @@ const Chat = () => {
     const token = parsedUser ? parsedUser.token : null;  
     const ids = localStorage.getItem('ids');
     const storedData = JSON.parse(ids);
-    if(!localStorage.getItem('user')) {
-        navigate('/');
-    
-      }
     const userId = storedData.data.id;
+
+    if( !localStorage.getItem('user')){
+        navigate('/');
+    }
    
     useEffect(() => {
         const fetchMatchesAndLikes = async () => {

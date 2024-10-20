@@ -137,12 +137,14 @@ console.log(formData)
     }
 
     try {
+      setUploadingPhoto(true); 
       // Upload images to Pinata and get their hashes
       const uploadedHashes = await Promise.all(files.map(file => uploadToPinata(file)));
       console.log('Uploaded IPFS Hashes:', uploadedHashes);
       // Set the hashes to the respective fields
       setFieldValue('profileImage1', uploadedHashes[0]); // First image hash
       setFieldValue('profileImage2', uploadedHashes[1]); // Second image hash
+      setUploadingPhoto(false);
     } catch (error) {
       // alert('Error uploading images. Please try again.');
       createToast("Error uploading images. Please try again.", "error")
@@ -227,7 +229,7 @@ console.log(formData)
               accept="image/*"
               multiple
               onChange={(event) => handleImageChange(event, setFieldValue)}
-        
+              style={{height:"40px"}}
             />
             <ErrorMessage name="profileImage" component="div" />
 

@@ -65,7 +65,7 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  top: -30px;
+  top: -40px;
   background-color: #F5EFFF;
   border: 2px solid #433878;
   box-shadow: 0px 0px 0px 5px #433878;
@@ -78,5 +78,6 @@
   .bottom-nav {
     width: 100%;
     left: 0;
+    height: 50px;
   }
 }
