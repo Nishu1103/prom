@@ -6,6 +6,7 @@ import { UserContext } from '../context/UserContext';
 import './Auth.css';
 import { useNavigate } from 'react-router-dom';
 import createToast from '../utils/toast';
+import { Link } from 'react-router-dom';
 const SignIn = () => {
   const { isAuthorized, setUsers,setUser } = useContext(UserContext);
   const navigate=useNavigate();
@@ -32,11 +33,12 @@ const SignIn = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
-      const response = await axios.post('http://localhost:3000/login', values);
+      const response = await axios.post('https://lol-2eal.onrender.com/login', values);
       setUser(response.data); // Save the user in context
       // setUsers(response.data);
       localStorage.setItem('user', JSON.stringify(response.data));
       console.log(localStorage.getItem('user', JSON.stringify(response.data)))
+      localStorage.setItem('ids', JSON.stringify(response.data));
       // alert('Login successful');
       createToast("Login successful","success")
       // setIsAuthorized(true); // Set isAuthorized to true
@@ -70,6 +72,14 @@ const SignIn = () => {
 
             <button type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Signing In...' : 'Sign In'}
+            </button>
+            <div className="ll">
+
+            </div>
+            <button >
+              <Link to="/Signup" className="link-button">
+                Dont't have an account? Sign up
+              </Link>
             </button>
           </Form>
         )}

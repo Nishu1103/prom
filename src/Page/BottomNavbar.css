@@ -6,7 +6,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background-color: #fff;
+  background-color: #433878;
   margin: 0px;
   border-radius: 20px 20px 0px 0px;
   padding: 30px 0px 15px;
@@ -21,7 +21,7 @@
 .bottom-nav li a {
   width: 75px;
   height: 75px;  
-  color: #822b61;
+  color: #E4B1F0;
   text-align: center;
   font-size: 20px;
   display: block;
@@ -66,9 +66,9 @@
   left: 50%;
   transform: translateX(-50%);
   top: -35px;
-  background-color: #fff;
-  border: 2px solid #822b61;
-  box-shadow: 0px 0px 0px 5px #822b61;
+  background-color: #F5EFFF;
+  border: 2px solid #433878;
+  box-shadow: 0px 0px 0px 5px #433878;
   transition: 0.5s;
   border-radius: 50%; 
   z-index: -1;

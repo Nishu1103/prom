@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import SignUp from './Auth/SignUp';
 import SignIn from './Auth/SignIn';
 // import { UserProvider } from './context/UserContext';
+import Layout from './Layout';
 import Home from './Page/Home';
 import Chat from './Page/Chat';
 import ChatRoom from './Page/ChatRoom';
@@ -14,6 +15,7 @@ import { UserContext } from './context/UserContext';
 import axios from 'axios';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Profile from './Page/Profile';
 // import { useNavigate } from 'react-router-dom';
 function App() {
     // const nevigate=useNavigate();  
@@ -27,7 +29,7 @@ function App() {
     useEffect(() => {
         const checkUserAuthentication = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user', {
+                const response = await axios.get('https://lol-2eal.onrender.com/user', {
                     headers: {
                         Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
                     },
@@ -61,16 +63,20 @@ function App() {
     return (
 
         <Router>
+            {/* <Layout> */}
             <TopNavbar/>
             <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
                 <Route path="/home" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/chatroom/:id" element={<ChatRoom />} />
                 <Route path="/notifications" element={<Notification />} />
+                
             </Routes>
             <BottomNavbar/>
+            {/* </Layout> */}
             <ToastContainer />
         </Router>
 

@@ -1,5 +1,5 @@
 .swipe-container {
-    display: flex;
+    /* display: flex; */
     justify-content: center;
     align-items: center;
     /* height: 80vh; */
@@ -9,7 +9,7 @@
 .card {
     width: 350px;
     height: 600px;
-    background-color: white;
+    /* background-color: white; */
     /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
     border-radius: 10px;
     text-align: center;
@@ -24,10 +24,14 @@
     object-fit: cover;
 }
 
-.user-info {
-    margin-top: 20px;
-    z-index: 100000;
+.user-info{
+    margin-left: 0px;
+    margin-top: -100px;
+    z-index: 10000;
+    font-size: 25px;
+    /* color: #7E60BF; */
 }
+
 
 .action-buttons {
     position: absolute;
@@ -47,9 +51,9 @@
     opacity: 0;
 }
 
-.like-button, .dislike-button ,.reversebutton{
+.like-button, .dislike-button , .reversebutton{
     width: 120px;
-    height: 40px;
+    height: 60px;
     font-size: 16px;
     border: none;
     border-radius: 20px;
@@ -93,6 +97,25 @@
     color: red;
 }
 
+.image-indicator {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.dot {
+    height: 8px;
+    width: 8px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+}
+
+.dot.active {
+    background-color: #333;
+}
 
 
 

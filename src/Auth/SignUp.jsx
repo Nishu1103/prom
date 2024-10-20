@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import './Auth.css';
+import { useState } from 'react';
 import createToast from '../utils/toast';
 import { Link } from 'react-router-dom';
 // import { createLogger } from 'vite';
@@ -12,13 +13,15 @@ import { Link } from 'react-router-dom';
 const SignUp = () => {
   const navigate = useNavigate();
   const { setUser } = useContext(UserContext);
-
+  const [uploadingPhoto,setUploadingPhoto] = useState(false);
   const initialValues = {
     name: '',
     email: '',
     password: '',
     confirmPassword: '',
     age: '',
+    PhoneNO:'',
+    rollNo:'',
     gender: '',
     bio: '',
     profileImage1: '',
@@ -34,6 +37,8 @@ const SignUp = () => {
       .oneOf([Yup.ref('password')], 'Passwords must match')
       .required('Required'),
     age: Yup.number().required('Required'),
+    PhoneNO: Yup.number().required('Required'),
+    rollNo: Yup.string().required('Required'),
     gender: Yup.string().required('Required'),
     bio: Yup.string().required('Required'),
     profileImage1: Yup.string().required('Required'),
@@ -43,7 +48,8 @@ const SignUp = () => {
 
   const handleSubmit = async (values, { setSubmitting }) => {
     const formData = new FormData();
-
+    console.log("click")
+console.log(formData)
     // Append user details to formData
     for (const key in values) {
       if (key === 'profileImage1' || key === 'profileImage2') {
@@ -62,7 +68,7 @@ const SignUp = () => {
     console.log('Form Values:', values);
 
     try {
-      const response = await axios.post('http://localhost:3000/register', formData, {
+      const response = await axios.post('https://lol-2eal.onrender.com/register', formData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -146,6 +152,7 @@ const SignUp = () => {
 
 
   const uploadToPinata = async (file) => {
+    setUploadingPhoto(true);
     const pinataApiKey = "f6331fbb7aa149475ff3"; // Replace with your Pinata API key
     const pinataSecretKey = 'ad957485ff439f7eafea6678595944edd323548b45e9b3b76bf7dbf2ac5bc0b7'; // Replace with your Pinata secret key
 
@@ -163,6 +170,7 @@ const SignUp = () => {
       });
       const ipfsHash = response.data.IpfsHash; // Store the IPFS hash in a string
       console.log("IPFS hash is", ipfsHash);
+      setUploadingPhoto(false)
       return ipfsHash; // Return the IPFS hash
     } catch (error) {
       console.error('Error uploading to Pinata:', error);
@@ -193,6 +201,12 @@ const SignUp = () => {
             <Field type="password" name="confirmPassword" placeholder="Confirm Password" />
             <ErrorMessage name="confirmPassword" component="div" />
 
+            <Field type="text" name="rollNo" placeholder="Roll No" />
+<ErrorMessage name="rollNo" component="div" />
+
+<Field type="number" name="PhoneNO" placeholder="Mobile No" />
+<ErrorMessage name="PhoneNO" component="div" />
+
             <Field type="number" name="age" placeholder="Age" />
             <ErrorMessage name="age" component="div" />
 
@@ -216,8 +230,8 @@ const SignUp = () => {
             />
             <ErrorMessage name="profileImage" component="div" />
 
-            <button type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Signing Up...' : 'Sign Up'}
+            <button type="submit" disabled={isSubmitting || uploadingPhoto}>
+            {uploadingPhoto ? 'Uploading Images..' : isSubmitting ? 'Signing Up..' : 'Sign Up'}
             </button>
             <div className="jjj">
 

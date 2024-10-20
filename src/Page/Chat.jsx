@@ -21,7 +21,7 @@ const Chat = () => {
         const fetchMatches = async () => {
             if (token) {
                 try {
-                    const response = await axios.get('http://localhost:3000/matches', {
+                    const response = await axios.get('https://lol-2eal.onrender.com/matches', {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }

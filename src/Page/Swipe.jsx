@@ -5,7 +5,7 @@ import { UserContext } from '../context/UserContext';
 import './Swipe.css';
 import { FcLike } from "react-icons/fc";
 import { ImCross } from "react-icons/im";
-import { GiReturnArrow } from "react-icons/gi";
+// import { GiReturnArrow } from "react-icons/gi";
 import createToast from '../utils/toast';
 
 const Swipe = () => {
@@ -13,11 +13,12 @@ const Swipe = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [animation, setAnimation] = useState('');  
     const { user } = useContext(UserContext);
-    const [error, setError] = useState(null);
+    const [ setError] = useState(null);
     const [swipeText, setSwipeText] = useState('');
     const userData = localStorage.getItem('user');
     const parsedUser = userData ? JSON.parse(userData) : null;
     const token = parsedUser ? parsedUser.token : null;
+    const [showSecondaryImage, setShowSecondaryImage] = useState(false);
     console.log(token)
 
 
@@ -28,7 +29,7 @@ const Swipe = () => {
         }
         try {
             const response = await axios.post(
-                'http://localhost:3000/like',
+                'https://lol-2eal.onrender.com/like',
                 { likedUserId },
                 {
                     headers: {
@@ -42,7 +43,7 @@ const Swipe = () => {
                 createToast("It's a match!","success")
             } else {
                 // alert('User liked successfully!');
-                createToast("User liked successfully!","success")
+                // createToast("User liked successfully!","success")
             }
             setMatches((prevMatches) => [...prevMatches, likedUserId]);
         } catch (error) {
@@ -58,7 +59,7 @@ const Swipe = () => {
         }
         try {
             await axios.post(
-                'http://localhost:3000/dislike',
+                'https://lol-2eal.onrender.com/dislike',
                 { dislikedUserId },
                 {
                     headers: {
@@ -67,7 +68,7 @@ const Swipe = () => {
                 }
             );
             // alert('User disliked successfully!');
-            createToast("User disliked successfully!","success")
+            // createToast("User disliked successfully!","success")
         } catch (error) {
             console.error('Error disliking user', error);
             setError('Error disliking user. Please try again later.');
@@ -99,6 +100,7 @@ const Swipe = () => {
 
     const nextUser = () => {
         setCurrentIndex((prevIndex) => (prevIndex + 1) % users.length);
+        setShowSecondaryImage(false);
     };
 
     const handlers = useSwipeable({
@@ -112,22 +114,44 @@ const Swipe = () => {
         return <div>No users available</div>;
     }
 
+    // const currentUser = users[currentIndex];
     const currentUser = users[currentIndex];
+
+    const currentImage = showSecondaryImage
+    ? `https://gateway.pinata.cloud/ipfs/${currentUser.profile_image_secondary}`
+    : `https://gateway.pinata.cloud/ipfs/${currentUser.profile_image}`;
+
+const handleImageClick = () => {
+    setShowSecondaryImage((prevState) => !prevState); // Toggle between images
+};
+
+
     console.log(currentUser)
+    console.log(currentUser.profile_image)
+    console.log(currentUser.profile_image_secondary)
 
     return (
         <div className={`swipe-container ${animation}`} {...handlers}>
+                       <div className="image-indicator">
+                <span className={`dot ${!showSecondaryImage ? 'active' : ''}`}></span>
+                <span className={`dot ${showSecondaryImage ? 'active' : ''}`}></span>
+            </div>
             <div className={`card ${animation}`}>
-            <img src={`https://gateway.pinata.cloud/ipfs/${currentUser.profile_image}`} alt={currentUser.name} className="user-image" />
+            <img
+                    src={currentImage}
+                    alt={currentUser.name}
+                    className="user-image"
+                    onClick={handleImageClick} // Click to toggle image
+                />
 
                 <div className="user-info">
-                    <h3>{currentUser.name}</h3>
-                    <p>{currentUser.bio}</p>
+                    <h2>{currentUser.name}</h2>
+                    <h3>{currentUser.bio}</h3>
                 </div>
                 <div className="action-buttons">
                     <ImCross onClick={handleDislike} className="dislike-button"/>
                     <FcLike onClick={() => handleLike(currentUser.id)} className="like-button"/> 
-                    <GiReturnArrow onClick={() => handleLike(currentUser.id)} className="reverse-button"/>
+                    {/* <GiReturnArrow onClick={() => handleLike(currentUser.id)} className="reverse-button"/> */}
                 </div>
             </div>
             {swipeText && <div className={`swipe-text ${animation}`}>{swipeText}</div>}

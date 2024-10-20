@@ -1,50 +1,8 @@
-/*  
-.top-navbar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background-color: #ff4a6e; 
-  padding: 15px 20px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  height: 60px;
-}
-
-.logo {
-  font-size: 28px;
-  font-weight: bold;
-  color: white;
-  display: flex;
-  align-items: center;
-}
-
-.title {
-  font-size: 22px;
-  color: white;
-  font-family: 'Roboto', sans-serif;
-  margin-right: 20px;
-}
-
-@media (max-width: 768px) {
-  .top-navbar {
-    padding: 10px 15px;
-  }
-
-  .title {
-    font-size: 18px;
-  }
-
-  .logo {
-    font-size: 24px;
-  }
-} */
-/* Container for the top navbar */
+ 
 .top-navbar {
   /* width: 98%; */
   height: 70px;
-  background-color: #822b61; /* Prom night theme color */
+  background-color: #433878; /* Prom night theme color */
   display: flex;
   align-items: center;
   justify-content: space-between;

@@ -1,0 +1,75 @@
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #FFE1FF;
+    /* border-radius: 15px; */
+    padding: 20px;
+    /* box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); */
+    max-width: 400px;
+    margin: 0 auto; /* Center the profile card */
+    /* transition: transform 0.3s ease-in-out; */
+}
+
+.profile-container:hover {
+    transform: translateY(-5px); /* Subtle hover effect */
+}
+
+/* Image container with a circular profile image */
+.image-container {
+    border-radius: 50%;
+    overflow: hidden;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for the image */
+}
+
+.profile-images {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Information container */
+.info-container {
+    text-align: center;
+    margin-top: 15px;
+}
+
+/* Name styling */
+.name {
+    font-size: 24px;
+    font-weight: bold;
+    color: #7E60BF;
+    margin: 10px 0;
+}
+
+/* Email styling */
+.email {
+    font-size: 16px;
+    color: #7E60BF;
+    margin: 5px 0;
+}
+
+/* Adding responsive design for smaller screens */
+@media (max-width: 768px) {
+    .profile-container {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .image-container {
+        width: 120px;
+        height: 120px;
+    }
+
+    .name {
+        font-size: 20px;
+    }
+
+    .email {
+        font-size: 14px;
+    }
+}
