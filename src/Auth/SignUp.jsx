@@ -68,7 +68,7 @@ console.log(formData)
     console.log('Form Values:', values);
 
     try {
-      const response = await axios.post('https://lol-2eal.onrender.com/register', formData, {
+      const response = await axios.post('http://localhost:3000/register', formData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -181,7 +181,7 @@ console.log(formData)
 
   return (
     <div className="auth-container">
-      <h2>Sign Up</h2>
+      <h2   style={{color:"#7E60BF"}} > Sign Up</h2>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -227,20 +227,18 @@ console.log(formData)
               accept="image/*"
               multiple
               onChange={(event) => handleImageChange(event, setFieldValue)}
+        
             />
             <ErrorMessage name="profileImage" component="div" />
 
-            <button type="submit" disabled={isSubmitting || uploadingPhoto}>
+            <button  className="bubble-button" type="submit" disabled={isSubmitting || uploadingPhoto}>
             {uploadingPhoto ? 'Uploading Images..' : isSubmitting ? 'Signing Up..' : 'Sign Up'}
             </button>
-            <div className="jjj">
-
-            </div>
-            <button >
+            <div className='bubble-link-container'>
               <Link to="/" className="link-button">
                 Already have an account? Sign in
               </Link>
-            </button>
+            </div>
 
           </Form>
         )}

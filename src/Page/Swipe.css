@@ -1,19 +1,21 @@
 .swipe-container {
-    /* display: flex; */
+    display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    /* height: 80vh; */
+    height: 82vh;
     overflow: hidden;
 }
 
 .card {
     width: 350px;
-    height: 600px;
+    height: 500px;
     /* background-color: white; */
     /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
     border-radius: 10px;
     text-align: center;
     padding: 20px;
+    top: -8%;
     position: relative;
 }
 
@@ -101,6 +103,8 @@
     display: flex;
     justify-content: center;
     margin-top: 10px;
+    position: relative;
+    top: -5.5%;
 }
 
 .dot {

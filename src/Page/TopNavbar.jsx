@@ -1,6 +1,15 @@
-import './TopNavbar.css';  
+import './TopNavbar.css'; 
+import { UserContext } from '../context/UserContext'; 
+import { useContext } from 'react';
 
 const TopNavbar = () => {
+
+  const { user , isAuthorized } = useContext(UserContext);
+
+  if (!isAuthorized) {
+    return null;
+  }
+
   return (
     <nav className="top-navbar">
       <div className="logo">

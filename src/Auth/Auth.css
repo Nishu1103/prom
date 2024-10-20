@@ -1,155 +1,184 @@
-
-   .auth-container-login{
-    width: 100%;
-    height: 250px;
-    max-width: 400px;
-    margin: 0 auto;
-    /* top: 50%; */
-    transform: translateY(50%);
-    padding: 40px;
-    background-color: #F5EFFF;
-    border-radius: 10px;
-    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    position: relative;
-    overflow-y: scroll;
-    overflow-x: hidden;
-
-   }
+/* Auth.css */
 .auth-container {
-  /* width: 100%; */
-  height: 500px;
   max-width: 400px;
+  height: 600px;
   margin: 0 auto;
-  /* top: 50%; */
-  transform: translateY(20%);
-  padding: 40px;
-  background-color: #F5EFFF;
-  border-radius: 10px;
-  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  position: relative;
+  padding: 2rem;
+  top:20%;
+  background-color: #E4B1F0;  
+  border-radius: 15px;  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  
   overflow-y: scroll;
   overflow-x: hidden;
-}
-
-/* Form title */
-.auth-container h2 {
-  color: #7E60BF;
-  font-size: 28px;
-  margin-bottom: 20px;
   position: relative;
-  z-index: 2;
+  transform: translateY(50px);
 }
 
-/* Form fields */
-.auth-container input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 5px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-  z-index: 2;
-  position: relative;
+h2 {
+  text-align: center;
+  color: #333; /* Dark text color */
+  margin-bottom: 1.5rem;
 }
 
-/* Error messages */
-.auth-container div {
-  color: #e74c3c;
-  font-size: 14px;
-  margin-top: -5px;
-  margin-bottom: 10px;
+form {
+  display: flex;
+  flex-direction: column;
 }
 
-/* Submit button */
-.auth-container button {
-  width: 100%;
-  padding: 12px;
-  background-color: #7E60BF;
-  color: #fff;
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+select {
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc; /* Light gray border */
+  border-radius: 10px; /* Rounded input fields */
+  font-size: 1rem;
+  transition: border 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input[type="file"]:focus,
+select:focus {
+  border-color: #7E60BF; /* Blue border on focus */
+  outline: none; /* Remove default outline */
+}
+
+button {
+  padding: 0.75rem;
+  background-color: #7E60BF; /* Blue background */
+  color: #fff; /* White text */
   border: none;
-  border-radius: 5px;
+  border-radius: 10px; /* Rounded button */
+  font-size: 1rem;
   cursor: pointer;
-  font-size: 16px;
-  position: relative;
-  z-index: 2;
   transition: background-color 0.3s ease;
 }
 
-.auth-container button:hover {
+button:hover {
+  background-color: #7E60BF; /* Darker blue on hover */
+}
+
+.link-button {
+  color: #7E60BF; /* Blue text for links */
+  text-align: center;
+  margin-top: 1rem;
+  text-decoration: none; /* Remove underline */
+}
+
+.link-button:hover {
+  text-decoration: underline; /* Underline on hover */
+}
+
+.error {
+  color: red; /* Red color for error messages */
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+}
+
+.jjj, .ll {
+  margin: 1rem 0; /* Space between buttons and the link */
+}
+
+/* Bubble theme styling for the authentication page */
+.bubble-auth-container {
+  max-width: 400px;
+  height: 400px;
+  margin: 0 auto;
+  padding: 2rem;
+  top:20%;
+  background-color: #E4B1F0;  
+  border-radius: 15px;  
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  
+  overflow-y: scroll;
+  overflow-x: hidden;
+  position: relative;
+  transform: translateY(50px);
+}
+
+.bubble-title {
+  font-size: 2.5rem;
+  color: #7E60BF;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.bubble-form {
+  /* background: white; */
+  padding: 10px;
+  /* border-radius: 25px; */
+  /* box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); */
+  width: 90%;
+  max-width: 400px;
+}
+
+.bubble-input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  border-radius: 25px;
+  border: 2px solid #e0e0e0;
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.bubble-input:focus {
+  border-color: #7E60BF;
+  box-shadow: 0 0 8px rgba(58, 134, 255, 0.2);
+}
+
+.bubble-error {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.bubble-button {
+  width: 100%;
+  padding: 15px;
+  background-color: #7E60BF;
+  color: white;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  text-transform: uppercase;
+}
+
+.bubble-button:disabled {
+  background-color: #b0c4de;
+  cursor: not-allowed;
+}
+
+.bubble-button:hover:not(:disabled) {
   background-color: #7E60BF;
 }
 
-/* Bubble animation background */
-.auth-container::before,
-.auth-container::after {
-  content: '';
-  position: absolute;
-  background-color: rgba(130, 43, 97, 0.2); /* Transparent bubbles */
-  border-radius: 50%;
-  z-index: 1;
-  animation: float 10s ease-in-out infinite;
+.bubble-link-container {
+  margin-top: 20px;
+  text-align: center;
 }
 
-.auth-container::before {
-  width: 150px;
-  height: 150px;
-  top: -50px;
-  left: -80px;
-  animation-duration: 8s;
+.bubble-link {
+  color: #7E60BF;
+  font-weight: bold;
+  text-decoration: none;
 }
 
-.auth-container::after {
-  width: 200px;
-  height: 200px;
-  bottom: -80px;
-  right: -100px;
-  animation-duration: 12s;
+.bubble-link:hover {
+  text-decoration: underline;
 }
 
-/* Floating bubbles animation */
-@keyframes float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+
+#file-upload-button{
+  height: 30px !important;
 }
 
-/* For smaller screens */
-@media (max-width: 768px) {
-  .auth-container {
-    padding: 20px;
-  }
-
-  .auth-container h2 {
-    font-size: 24px;
-  }
-
-  .auth-container input,
-  .auth-container button {
-    font-size: 14px;
-    width: 90%;
-  }
-}
-select[name="gender"] {
-  width: 94%;
-  padding: 10px;
-  margin: 10px 0;
-  font-size: 16px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  position: relative;
-  background-color: white;
  
-}
-
-option {
-  color: #333;
-  /* background-color: #fff; */
-}

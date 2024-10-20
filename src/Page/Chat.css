@@ -1,8 +1,8 @@
- 
+/* 
 .chat-container {
     display: flex;
     justify-content: center;
-    /* justify-content: space-around; */
+    
     align-items: center;
     height: 88vh;
     background-color: #FFE1FF;
@@ -12,7 +12,7 @@
  
 .matches-list {
     width: 100%;
-    /* max-width: 600px; */
+    
     background-color: FFE1FF;
     border-radius: 15px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
@@ -23,7 +23,7 @@
 
  
 .matches-list h3 {
-    /* position: fixed; */
+    
     font-size: 24px;
     color: #7E60BF;
     margin-bottom: 20px;
@@ -72,5 +72,116 @@
 .matches-list p {
     font-size: 18px;
     color: #999;
+    margin-top: 20px;
+} */
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 88vh;
+    /* background-color: #FDF6FF; */
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+/* Likes section */
+.likes-list {
+    width: 90%;
+    /* background-color: #FFFFFF; */
+    border-radius: 15px;
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.likes-list h3 {
+    font-size: 24px;
+    color: #FF6B6B;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.horizontal-scroll {
+    display: flex;
+    overflow-x: auto;
+    gap: 20px;
+    padding: 10px;
+}
+
+.like-item {
+    flex: 0 0 auto;
+    text-align: center;
+}
+
+.blurred-profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    filter: blur(5px);
+    transition: filter 0.3s ease-in-out;
+}
+
+.like-item:hover .blurred-profile-image {
+    filter: blur(2px);
+}
+
+/* Matches section */
+.matches-list {
+    width: 90%;
+    /* background-color: #FFFFFF; */
+    border-radius: 15px;
+    /* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); */
+    padding: 10px;
+    text-align: center;
+}
+
+.matches-list h3 {
+    font-size: 26px;
+    color: #7E60BF;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+.matches-list ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.matches-list li {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    padding: 15px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #E8E4EC;
+    transition: background-color 0.3s ease-in-out, transform 0.2s ease;
+    border-radius: 8px;
+}
+
+.matches-list li:hover {
+    background-color: #FAF4FF;
+    transform: translateY(-2px);
+}
+
+.profile-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 15px;
+    border: 3px solid #FF6B6B;
+}
+
+.matches-list li span {
+    font-size: 18px;
+    font-weight: 600;
+    color: #4A4A4A;
+}
+
+.matches-list p {
+    font-size: 18px;
+    color: #B0A5D4;
     margin-top: 20px;
 }

@@ -3,8 +3,10 @@ import axios from 'axios';
 import { UserContext } from '../context/UserContext';
 import Modal from 'react-modal';  
 import "./Notification.css";
+import { useNavigate } from 'react-router-dom';
 const Notification = () => {
     const { user } = useContext(UserContext);
+    const navigate = useNavigate();
     const [promRequests, setPromRequests] = useState([]);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedRequest, setSelectedRequest] = useState(null);
@@ -19,11 +21,16 @@ const Notification = () => {
     const storedData = JSON.parse(ids);
     // console.log(storedData, "Parsed Data");
     console.log(token)
+
+    if(!localStorage.getItem('user')) {
+        navigate('/');
+    
+      }
     const userId = storedData.data.id;
     useEffect(() => {
         const fetchPromRequests = async () => {
             try {
-                const response = await axios.get(`https://lol-2eal.onrender.com/promnight/check/${userId}`, {
+                const response = await axios.get(`http://localhost:3000/promnight/check/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
@@ -52,7 +59,7 @@ const Notification = () => {
     const acceptRequest = async () => {
         if (selectedRequest) {
             try {
-                const response = await axios.post('https://lol-2eal.onrender.com/acceptPromNight', {
+                const response = await axios.post('http://localhost:3000/acceptPromNight', {
                     requestId: selectedRequest.id,  
                 }, {
                     headers: {
@@ -76,7 +83,7 @@ const Notification = () => {
     const cancelRequest = async () => {
         if (selectedRequest) {
             try {
-                const response = await axios.post('https://lol-2eal.onrender.com/cancelPromNight', {
+                const response = await axios.post('http://localhost:3000/cancelPromNight', {
                     requestId: selectedRequest.id, // Use the request ID to cancel
                 }, {
                     headers: {

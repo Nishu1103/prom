@@ -1,8 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import './Profile.css'; // Importing the CSS file
+import React, { useEffect, useState,useContext } from 'react';
+import './Profile.css';  
+import { useNavigate } from 'react-router-dom';
+import { UserContext } from '../context/UserContext';
+
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
+
+  const { user , isAuthorized , setIsAuthorized} = useContext(UserContext);
+  if(!localStorage.getItem('user')) {
+    navigate('/');
+    setIsAuthorized(false);
+
+  }else{
+    setIsAuthorized(true);
+  }
 
   useEffect(() => {
     // Fetching user data from localStorage
@@ -15,7 +28,11 @@ const Profile = () => {
   if (!userData) {
     return <p>Loading profile...</p>;
   }
-
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/');
+  };
+  
   return (
     <div className="profile-container">
       <div className="image-container">
@@ -31,6 +48,10 @@ const Profile = () => {
         <p className="bio">{userData.bio}</p>
         <p className='roll no'>{userData.rollNo}</p>
         {/* Add more details as needed */}
+      </div>
+
+      <div className="logoutbuttom" onClick={handleLogout}>
+        logout
       </div>
     </div>
   );

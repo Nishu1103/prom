@@ -56,7 +56,7 @@
 //     useEffect(() => {
 //         const fetchMessages = async () => {
 //             try {
-//                 const response = await axios.get(`https://lol-2eal.onrender.com/messages/${id}`, {
+//                 const response = await axios.get(`http://localhost:3000/messages/${id}`, {
 //                     headers: {
 //                         Authorization: `Bearer ${token}`,
 //                     }
@@ -73,7 +73,7 @@
 
 //     const sendMessage = async () => {
 //         try {
-//             await axios.post('https://lol-2eal.onrender.com/send-message', {
+//             await axios.post('http://localhost:3000/send-message', {
 //                 receiverId: id,
 //                 message: message
 //             }, {
@@ -134,6 +134,7 @@ import "./ChatRoom.css";
 import Modal from 'react-modal';
 import { useCallback } from 'react';
 import createToast from '../utils/toast';
+import { useNavigate } from 'react-router-dom';
 const ChatRoom = () => {
     const { id } = useParams();  
     const [messages, setMessages] = useState([]);
@@ -156,8 +157,16 @@ const ChatRoom = () => {
     // console.log(storedData, "Parsed Data");
     const userId = storedData.data.id;
     const userName = storedData.data.name;
+    const navigate = useNavigate();
     console.log(userName)
     console.log(userId, "sender id");
+
+    if(!ids || !localStorage.getItem('user')) {
+
+        navigate('/');
+    
+    
+      }
 
     useEffect(() => {
         
@@ -183,7 +192,7 @@ const ChatRoom = () => {
         // Fetch chat messages between sender and receiver
         const fetchMessages = async () => {
             try {
-                const response = await axios.get(`https://lol-2eal.onrender.com/messages/${id}`, {
+                const response = await axios.get(`http://localhost:3000/messages/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -212,7 +221,7 @@ const ChatRoom = () => {
     const sendMessage = async () => {
         if (message.trim()) {
             try {
-                await axios.post('https://lol-2eal.onrender.com/send-message', {
+                await axios.post('http://localhost:3000/send-message', {
                     receiverId: id,
                     senderId: userId,  
                     message: message
@@ -244,7 +253,7 @@ const ChatRoom = () => {
 
     const requestPromNight = async () => {
         try {
-            const response = await axios.post('https://lol-2eal.onrender.com/requestPromNight', {
+            const response = await axios.post('http://localhost:3000/requestPromNight', {
                 senderId: userId,
                 receiverId: id
             }, {
@@ -266,7 +275,7 @@ const ChatRoom = () => {
 
     const checkPromRequest = useCallback(async () => {
         try {
-            const response = await axios.get(`https://lol-2eal.onrender.com/promnight/check/${userId}`, {
+            const response = await axios.get(`http://localhost:3000/promnight/check/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -299,7 +308,7 @@ const ChatRoom = () => {
     }, [checkPromRequest]);
     const acceptPromNight = async () => {
         try {
-            const response = await axios.post('https://lol-2eal.onrender.com/acceptPromNight', {
+            const response = await axios.post('http://localhost:3000/acceptPromNight', {
                 requestId: promRequest._id 
             }, {
                 headers: {
@@ -320,7 +329,7 @@ const ChatRoom = () => {
 
     const cancelPromNight = async () => {
         try {
-            const response = await axios.post('https://lol-2eal.onrender.com/cancelPromNight', {
+            const response = await axios.post('http://localhost:3000/cancelPromNight', {
                 requestId: promRequest._id  
             }, {
                 headers: {

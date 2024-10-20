@@ -119,10 +119,11 @@
     justify-content: center;
     align-items: center;
     position: fixed;
-    bottom: 145px !important; /* Adjust for more space */
+    bottom: 100px !important; /* Adjust for more space */
     left: 0;
     right: 0;
     padding: 10px;
+    z-index: 1;
     /* background-color: #ffffff; */
     /* box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1); */
 }
@@ -156,6 +157,7 @@
     justify-content: center;
     align-items: center;
     transition: background-color 0.3s ease;
+    margin-bottom: 1rem;
 }
 
 .chatbutton:hover {

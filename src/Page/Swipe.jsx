@@ -5,6 +5,7 @@ import { UserContext } from '../context/UserContext';
 import './Swipe.css';
 import { FcLike } from "react-icons/fc";
 import { ImCross } from "react-icons/im";
+import { useNavigate } from 'react-router-dom';
 // import { GiReturnArrow } from "react-icons/gi";
 import createToast from '../utils/toast';
 
@@ -21,6 +22,14 @@ const Swipe = () => {
     const [showSecondaryImage, setShowSecondaryImage] = useState(false);
     console.log(token)
 
+    const navigate = useNavigate();
+
+    const {   isAuthorized, setIsAuthorized  } = useContext(UserContext);
+
+    if (!isAuthorized) {
+        navigate('/');
+        setIsAuthorized(false);
+    }
 
     const likeUser = async (likedUserId) => {
         if (!user || !token) {
@@ -29,7 +38,7 @@ const Swipe = () => {
         }
         try {
             const response = await axios.post(
-                'https://lol-2eal.onrender.com/like',
+                'http://localhost:3000/like',
                 { likedUserId },
                 {
                     headers: {
@@ -59,7 +68,7 @@ const Swipe = () => {
         }
         try {
             await axios.post(
-                'https://lol-2eal.onrender.com/dislike',
+                'http://localhost:3000/dislike',
                 { dislikedUserId },
                 {
                     headers: {

@@ -14,19 +14,23 @@
 // };
 
 // export default BottomNavbar;
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { FaUser, FaHome, FaCodepen, FaRegHeart } from 'react-icons/fa'; // React icons
+import { FaUser, FaHome, FaCodepen, FaRegHeart } from 'react-icons/fa';
+import { UserContext } from '../context/UserContext';
 import './BottomNavbar.css';
 
 const BottomNavbar = () => {
   const [activeLink, setActiveLink] = useState('/home');
   const sliderRef = useRef(null);
+  const {isAuthorized,setIsAuthorized}=useContext(UserContext)
 
   const handleLinkClick = (path, event) => {
     setActiveLink(path);
     moveSlider(event.target);
   };
+
+  console.log(isAuthorized);
 
   const moveSlider = (element) => {
     if (sliderRef.current && element) {
@@ -41,6 +45,10 @@ const BottomNavbar = () => {
       moveSlider(activeElement);
     }
   }, [activeLink]);
+
+  if (!isAuthorized) {
+    return null;
+  }
 
   return (
     <ul className="bottom-nav">
