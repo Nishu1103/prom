@@ -30,7 +30,7 @@ export const UserProvider = ({ children }) => {
             setLoading(true); // Set loading to true before fetching
             try {
                 // Send request with token authorization header
-                const response = await axios.get('http://localhost:3000/getUsers', {
+                const response = await axios.get('https://lol-2eal.onrender.com/getUsers', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -55,7 +55,7 @@ export const UserProvider = ({ children }) => {
 
         const checkUserAuthentication = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user', {
+                const response = await axios.get('https://lol-2eal.onrender.com/user', {
                     headers: {
                         Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
                     },
