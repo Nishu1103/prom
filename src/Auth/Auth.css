@@ -28,6 +28,7 @@ input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="number"],
+input[type="file"],
 select {
   padding: 0.75rem;
   margin-bottom: 1rem;
@@ -35,6 +36,7 @@ select {
   border-radius: 10px; /* Rounded input fields */
   font-size: 1rem;
   transition: border 0.3s ease;
+  background-color: white;
 }
 
 input[type="text"]:focus,
@@ -42,6 +44,7 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 input[type="number"]:focus,
 input[type="file"]:focus,
+
 select:focus {
   border-color: #7E60BF; /* Blue border on focus */
   outline: none; /* Remove default outline */
@@ -88,6 +91,15 @@ button:hover {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.auth-containerss{
+  height: 95vh;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    padding: 30px;
+    margin: 20px;
 }
 
 /* Bubble theme styling for the authentication page */
@@ -185,4 +197,9 @@ button:hover {
   height: 30px !important;
 }
 
- /* http://localhost:3000/
+ 
+
+ .error{
+  color: red;
+ }
+

@@ -190,7 +190,7 @@ const SignUp = () => {
 	};
 
 	return (
-		<div className="auth-containers">
+		<div className="auth-containerss">
 			<div className="auth-container">
 				<h2 style={{ color: "#7E60BF" }}> Sign Up</h2>
 				<Formik
@@ -201,21 +201,21 @@ const SignUp = () => {
 					{({ isSubmitting, setFieldValue }) => (
 						<Form>
 							<Field type="text" name="name" placeholder="Name" />
-							<ErrorMessage name="name" component="div" />
+							<ErrorMessage  style={{ color: 'red' , fontSize:'10px'}} name="name" component="div" />
 
 							<Field
 								type="email"
 								name="email"
 								placeholder="Email"
 							/>
-							<ErrorMessage name="email" component="div" />
+							<ErrorMessage style={{ color: 'red' , fontSize:'10px'}} name="email" component="div" />
 
 							<Field
 								type="password"
 								name="password"
 								placeholder="Password"
 							/>
-							<ErrorMessage name="password" component="div" />
+							<ErrorMessage style={{ color: 'red' , fontSize:'10px'}} name="password" component="div" />
 
 							<Field
 								type="password"
@@ -224,6 +224,7 @@ const SignUp = () => {
 							/>
 							<ErrorMessage
 								name="confirmPassword"
+								style={{ color: 'red' , fontSize:'10px'}}
 								component="div"
 							/>
 
@@ -232,7 +233,7 @@ const SignUp = () => {
 								name="rollNo"
 								placeholder="Roll No"
 							/>
-							<ErrorMessage name="rollNo" component="div" />
+							<ErrorMessage name="rollNo" style={{ color: 'red' , fontSize:'10px'}} component="div" />
 
 
 							<Field
@@ -240,7 +241,7 @@ const SignUp = () => {
 								name="year"
 								placeholder="year"
 							/>
-							<ErrorMessage name="year" component="div" />
+							<ErrorMessage name="year" style={{ color: 'red' , fontSize:'10px'}} component="div" />
 
 
 							<Field
@@ -248,7 +249,7 @@ const SignUp = () => {
 								name="hall"
 								placeholder="hall"
 							/>
-							<ErrorMessage name="hall" component="div" />
+							<ErrorMessage name="hall" style={{ color: 'red' , fontSize:'10px'}} component="div" />
 
 
 
@@ -257,20 +258,20 @@ const SignUp = () => {
 								name="PhoneNO"
 								placeholder="Mobile No"
 							/>
-							<ErrorMessage name="PhoneNO" component="div" />
+							<ErrorMessage name="PhoneNO" style={{ color: 'red' , fontSize:'10px'}} component="div" />
 
 							<Field type="number" name="age" placeholder="Age" />
-							<ErrorMessage name="age" component="div" />
+							<ErrorMessage name="age" style={{ color: 'red' , fontSize:'10px'}} component="div" />
 
 							<Field as="select" name="gender">
 								<option value="">Select Gender</option>
 								<option value="Male">Male</option>
 								<option value="Female">Female</option>
 							</Field>
-							<ErrorMessage name="gender" component="div" />
+							<ErrorMessage name="gender" style={{ color: 'red' , fontSize:'10px'}} component="div" />
 
 							<Field type="text" name="bio" placeholder="Bio" />
-							<ErrorMessage name="bio" component="div" />
+							<ErrorMessage name="bio" style={{ color: 'red' , fontSize:'10px'}} component="div" />
 
 							{/* Image Upload Fields */}
 							<input
@@ -278,12 +279,13 @@ const SignUp = () => {
 								name="profileImage"
 								accept="image/*"
 								multiple
+								placeholder="upload two photos"
 								onChange={(event) =>
 									handleImageChange(event, setFieldValue)
 								}
 								style={{ height: "40px" }}
 							/>
-							<ErrorMessage name="profileImage" component="div" />
+							<ErrorMessage style={{ color: 'red' , fontSize:'10px'}} name="profileImage" component="div" />
 
 							<button
 								className="bubble-button"
@@ -305,7 +307,7 @@ const SignUp = () => {
 					)}
 				</Formik>
 			</div>
-		</div>
+		</div> 
 	);
 };
 
