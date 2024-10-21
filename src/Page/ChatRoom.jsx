@@ -56,7 +56,7 @@
 //     useEffect(() => {
 //         const fetchMessages = async () => {
 //             try {
-//                 const response = await axios.get(`/messages/${id}`, {
+//                 const response = await axios.get(`http://localhost:3000/messages/${id}`, {
 //                     headers: {
 //                         Authorization: `Bearer ${token}`,
 //                     }
@@ -73,7 +73,7 @@
 
 //     const sendMessage = async () => {
 //         try {
-//             await axios.post('/send-message', {
+//             await axios.post('http://localhost:3000/send-message', {
 //                 receiverId: id,
 //                 message: message
 //             }, {
@@ -183,21 +183,26 @@ const ChatRoom = () => {
 		};
 	}, [userId, id]);
 
-	useEffect(() => {
-		const fetchMessages = async () => {
-			if (!userId || !token) return;
-
-			try {
-				const response = await axios.get(`/messages/${id}`, {
-					headers: { Authorization: `Bearer ${token}` },
-					params: { senderId: userId, receiverId: id },
-				});
-				setMessages(response.data.messages);
-				setLoading(false);
-			} catch (error) {
-				console.error("Error fetching messages:", error);
-			}
-		};
+    useEffect(() => {
+        // Fetch chat messages between sender and receiver
+        const fetchMessages = async () => {
+            try {
+                const response = await axios.get(`http://localhost:3000/messages/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    params: {
+                        senderId: userId,  
+                        receiverId: id,  
+                    }
+                });
+                setMessages(response.data.messages);
+                console.log(response.data.messages)
+                setLoading(false);
+            } catch (error) {
+                console.error("Error fetching messages:", error);
+            }
+        };
 
 		fetchMessages();
 	}, [id, token, userId]);
@@ -208,44 +213,49 @@ const ChatRoom = () => {
 		}
 	}, [messages]);
 
-	const sendMessage = async () => {
-		if (message.trim()) {
-			try {
-				await axios.post(
-					"/send-message",
-					{ receiverId: id, senderId: userId, message },
-					{
-						headers: { Authorization: `Bearer ${token}` },
-					}
-				);
+    const sendMessage = async () => {
+        if (message.trim()) {
+            try {
+                await axios.post('http://localhost:3000/send-message', {
+                    receiverId: id,
+                    senderId: userId,  
+                    message: message
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
 
-				socket.current.emit("sendMessage", {
-					receiverId: id,
-					message,
-					senderId: userId,
-				});
+              
+                socket.current.emit('sendMessage', {
+                    receiverId: id,
+                    message: message,
+                    senderId: userId
+                });
 
-				setMessages((prevMessages) => [
-					...prevMessages,
-					{ senderId: userId, message },
-				]);
-				setMessage("");
-			} catch (error) {
-				console.error("Error sending message:", error);
-				createToast("Error sending message", "error");
-			}
-		}
-	};
+               
+                setMessages((prevMessages) => [
+                    ...prevMessages,
+                    { senderId: userId, message }
+                ]);
+                setMessage('');
+            } catch (error) {
+                console.error("Error sending message:", error);
+                createToast("Error sending message:","error")
+            }
+        }
+    };
 
-	const requestPromNight = async () => {
-		try {
-			const response = await axios.post(
-				"/requestPromNight",
-				{ senderId: userId, receiverId: id },
-				{
-					headers: { Authorization: `Bearer ${token}` },
-				}
-			);
+    const requestPromNight = async () => {
+        try {
+            const response = await axios.post('http://localhost:3000/requestPromNight', {
+                senderId: userId,
+                receiverId: id
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
 			if (response.data.success) {
 				createToast("Prom night request sent!", "success");
@@ -257,11 +267,13 @@ const ChatRoom = () => {
 		}
 	};
 
-	const checkPromRequest = useCallback(async () => {
-		try {
-			const response = await axios.get(`/promnight/check/${userId}`, {
-				headers: { Authorization: `Bearer ${token}` },
-			});
+    const checkPromRequest = useCallback(async () => {
+        try {
+            const response = await axios.get(`http://localhost:3000/promnight/check/${userId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            });
 
 			if (response.data.promRequest) {
 				setPromRequest(response.data.promRequest);
@@ -273,20 +285,23 @@ const ChatRoom = () => {
 		}
 	}, [userId, token]);
 
-	useEffect(() => {
-		const interval = setInterval(checkPromRequest, 900000);
-		return () => clearInterval(interval);
-	}, [checkPromRequest]);
+    useEffect(() => {
+        const interval = setInterval(() => {
+            checkPromRequest();
+            console.log("hello");
+        }, 900000);
 
-	const acceptPromNight = async () => {
-		try {
-			const response = await axios.post(
-				"/acceptPromNight",
-				{ requestId: promRequest._id },
-				{
-					headers: { Authorization: `Bearer ${token}` },
-				}
-			);
+        return () => clearInterval(interval);
+    }, [checkPromRequest]);
+    const acceptPromNight = async () => {
+        try {
+            const response = await axios.post('http://localhost:3000/acceptPromNight', {
+                requestId: promRequest._id 
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
 			if (response.data.success) {
 				createToast("Prom night request accepted!", "success");
@@ -298,15 +313,15 @@ const ChatRoom = () => {
 		}
 	};
 
-	const cancelPromNight = async () => {
-		try {
-			const response = await axios.post(
-				"/cancelPromNight",
-				{ requestId: promRequest._id },
-				{
-					headers: { Authorization: `Bearer ${token}` },
-				}
-			);
+    const cancelPromNight = async () => {
+        try {
+            const response = await axios.post('http://localhost:3000/cancelPromNight', {
+                requestId: promRequest._id  
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
 			if (response.data.success) {
 				createToast("Prom night request canceled!", "success");

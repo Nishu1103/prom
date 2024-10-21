@@ -22,7 +22,7 @@
 //         const fetchMatches = async () => {
 //             if (token) {
 //                 try {
-//                     const response = await axios.get('/matches', {
+//                     const response = await axios.get('http://localhost:3000/matches', {
 //                         headers: {
 //                             Authorization: `Bearer ${token}`
 //                         }
@@ -99,7 +99,7 @@ const Chat = () => {
             if (token) {
                 try {
                     // Fetch matches
-                    const matchesResponse = await axios.get('/matches', {
+                    const matchesResponse = await axios.get('http://localhost:3000/matches', {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
@@ -111,7 +111,7 @@ const Chat = () => {
                     }
 
                     // Fetch users who liked you
-                    const likesResponse = await axios.get(`/likes/${userId}`, {
+                    const likesResponse = await axios.get(`http://localhost:3000/likes/${userId}`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }

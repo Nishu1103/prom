@@ -13,59 +13,52 @@ export const UserProvider = ({ children }) => {
 	const [error, setError] = useState(null); // Error state
 	const [isAuthorized, setIsAuthorized] = useState(false);
 
-	const userData = localStorage.getItem("user");
-	const parsedUser = userData ? JSON.parse(userData) : null;
-	const token = parsedUser ? parsedUser.token : null;
-	// console.log(token)
-	useEffect(() => {
-		const fetchUsers = async () => {
-			if (!token) {
-				console.error("No token available for authentication");
-				setError("No token available for authentication");
-				setLoading(false);
-				return;
-			}
-			setLoading(true); // Set loading to true before fetching
-			try {
-				// Send request with token authorization header
-				const response = await axios.get(
-					"/getUsers",
-					{
-						headers: {
-							Authorization: `Bearer ${token}`,
-						},
-					}
-				);
-				if (response.data && Array.isArray(response.data.data)) {
-					setUsers(response.data.data);
-					// console.log(response.data.data); // Update users from the data property
-				} else {
-					console.error(
-						"Fetched data is not an array",
-						response.data
-					);
-					setError("Fetched data is not in the expected format.");
-				}
-			} catch (error) {
-				console.error("Error fetching users", error);
-				setError("Error fetching users. Please try again later.");
-			} finally {
-				setLoading(false); // Set loading to false after fetching
-			}
-		};
+    const userData = localStorage.getItem('user');
+    const parsedUser = userData ? JSON.parse(userData) : null;
+    const token = parsedUser ? parsedUser.token : null;
+    console.log(token)
+    useEffect(() => {
+        const fetchUsers = async () => {
+
+            if (!token) {
+                console.error('No token available for authentication');
+                setError('No token available for authentication');
+                setLoading(false);
+                return;
+            }
+            setLoading(true); // Set loading to true before fetching
+            try {
+                // Send request with token authorization header
+                const response = await axios.get('http://localhost:3000/getUsers', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                if (response.data && Array.isArray(response.data.data)) {
+                    setUsers(response.data.data); 
+                    console.log(response.data.data)// Update users from the data property
+                } else {
+                    console.error('Fetched data is not an array', response.data);
+                    setError('Fetched data is not in the expected format.');
+                }
+            } catch (error) {
+                console.error('Error fetching users', error);
+                setError('Error fetching users. Please try again later.');
+            } finally {
+                setLoading(false); // Set loading to false after fetching
+            }
+        };
 
 		fetchUsers();
 
-		const checkUserAuthentication = async () => {
-			try {
-				const response = await axios.get(
-					"/user",
-					{
-						headers: {
-							Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
-						},
-					}
-				);
+        const checkUserAuthentication = async () => {
+            try {
+                const response = await axios.get('http://localhost:3000/user', {
+                    headers: {
+                        Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
+                    },
+                });
+
 
 				if (response.data) {
 					setUser(response.data); // Assuming the user data is returned in response.data.user

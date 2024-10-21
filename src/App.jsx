@@ -16,6 +16,8 @@ import axios from 'axios';
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profile from './Page/Profile';
+import InvitationForm from './Page/InvitationForm';
+
 // import { useNavigate } from 'react-router-dom';
 
 axios.defaults.baseURL = 'https://lol-2eal.onrender.com';
@@ -33,7 +35,7 @@ function App() {
     useEffect(() => {
         const checkUserAuthentication = async () => {
             try {
-                const response = await axios.get('/user', {
+                const response = await axios.get('http://localhost:3000/user', {
                     headers: {
                         Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
                     },
@@ -77,6 +79,8 @@ function App() {
                 <Route path="/chat" element={<Chat />} />
                 <Route path="/chatroom/:id" element={<ChatRoom />} />
                 <Route path="/notifications" element={<Notification />} />
+                <Route path="/prom-invite/:inviteCode" element={<InvitationForm />} />
+
                 
             </Routes>
             <BottomNavbar/>

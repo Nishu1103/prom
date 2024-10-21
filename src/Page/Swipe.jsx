@@ -31,57 +31,58 @@ const Swipe = () => {
 		setIsAuthorized(false);
 	}
 
-	const likeUser = async (likedUserId) => {
-		if (!user || !token) {
-			setError("User is not authenticated.");
-			return;
-		}
-		try {
-			const response = await axios.post(
-				"/like",
-				{ likedUserId },
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
-			if (response.data === "It's a match!") {
-				// alert('It\'s a match!');
-				createToast("It's a match!", "success");
-			} else {
-				// alert('User liked successfully!');
-				// createToast("User liked successfully!","success")
-			}
-			setMatches((prevMatches) => [...prevMatches, likedUserId]);
-		} catch (error) {
-			console.error("Error liking user", error);
-			setError("Error liking user. Please try again later.");
-		}
-	};
+    const likeUser = async (likedUserId) => {
+        if (!user || !token) {
+            setError('User is not authenticated.');
+            return;
+        }
+        try {
+            const response = await axios.post(
+                'http://localhost:3000/like',
+                { likedUserId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            if (response.data === "It's a match!") {
 
-	const dislikeUser = async (dislikedUserId) => {
-		if (!user || !token) {
-			setError("User is not authenticated.");
-			return;
-		}
-		try {
-			await axios.post(
-				"/dislike",
-				{ dislikedUserId },
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
-			// alert('User disliked successfully!');
-			// createToast("User disliked successfully!","success")
-		} catch (error) {
-			console.error("Error disliking user", error);
-			setError("Error disliking user. Please try again later.");
-		}
-	};
+                // alert('It\'s a match!');
+                createToast("It's a match!","success")
+            } else {
+                // alert('User liked successfully!');
+                // createToast("User liked successfully!","success")
+            }
+            setMatches((prevMatches) => [...prevMatches, likedUserId]);
+        } catch (error) {
+            console.error('Error liking user', error);
+            setError('Error liking user. Please try again later.');
+        }
+    };
+
+    const dislikeUser = async (dislikedUserId) => {
+        if (!user || !token) {
+            setError('User is not authenticated.');
+            return;
+        }
+        try {
+            await axios.post(
+                'http://localhost:3000/dislike',
+                { dislikedUserId },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            );
+            // alert('User disliked successfully!');
+            // createToast("User disliked successfully!","success")
+        } catch (error) {
+            console.error('Error disliking user', error);
+            setError('Error disliking user. Please try again later.');
+        }
+    };
 
 	const handleLike = (userId) => {
 		setAnimation("swipe-right");

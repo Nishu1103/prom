@@ -67,24 +67,27 @@ const SignUp = () => {
 		// Log form values
 		console.log("Form Values:", values);
 
-		try {
-			const response = await axios.post("/register", formData, {
-				headers: {
-					"Content-Type": "application/json",
-				},
-			});
-			setUser(response.data); // Save the user in context
-			// alert('User Registered Successfully!');
-			createToast("User Registered Successfully!", "success");
-			navigate("/");
-		} catch (error) {
-			// alert('Error during registration');
-			createToast("Error during registration", "error");
-			console.error(error);
-		} finally {
-			setSubmitting(false);
-		}
-	};
+    try {
+      const response = await axios.post('http://localhost:3000/register', formData, {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      setUser(response.data); // Save the user in context
+      // alert('User Registered Successfully!');
+      createToast("User Registered Successfully!", "success")
+      navigate('/');
+    } catch (error) {
+      // alert('Error during registration');
+      createToast("Error during registration", "error")
+      console.error(error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+
+
 
 	//   const handleSubmit = async (values, { setSubmitting }) => {
 	//     const formData = new FormData();

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext , useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -26,21 +26,21 @@ const SignIn = () => {
 		password: Yup.string().required("Required"),
 	});
 
-	const handleSubmit = async (values, { setSubmitting }) => {
-		try {
-			const response = await axios.post("/login", values);
-			setUser(response.data); // Save the user in context
-			localStorage.setItem("user", JSON.stringify(response.data));
-			localStorage.setItem("ids", JSON.stringify(response.data));
-			createToast("Login successful", "success");
-			navigate("/home");
-		} catch (error) {
-			createToast("Error during login", "error");
-			console.error("Error during login", error);
-		} finally {
-			setSubmitting(false);
-		}
-	};
+  const handleSubmit = async (values, { setSubmitting }) => {
+    try {
+      const response = await axios.post('http://localhost:3000/login', values);
+      setUser(response.data); // Save the user in context
+      localStorage.setItem('user', JSON.stringify(response.data));
+      localStorage.setItem('ids', JSON.stringify(response.data));
+      createToast('Login successful', 'success');
+      navigate('/home');
+    } catch (error) {
+      createToast('Error during login', 'error');
+      console.error('Error during login', error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
 	return (
 		<div className="auth-containers">
