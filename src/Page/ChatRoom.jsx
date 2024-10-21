@@ -36,7 +36,7 @@
 //         // Register the user to the socket room
 //         console.log(`Registering user with ID: ${userId}`);
 //         socket.current.emit('registerUser', userId);
-//         socket.current.emit('registerUser', id);
+//         socket.current.emit('registerUser', id); 
 //         // console.log(`User ${user.id} registered to socket`);
 //         socket.current.on('connect', () => {
 //             console.log('Socket connected:', socket.current.id);
@@ -125,63 +125,81 @@
 // };
 
 // export default ChatRoom;
-import { useEffect, useState, useContext, useRef, useCallback } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
-import io from "socket.io-client";
-import { UserContext } from "../context/UserContext";
+import { useEffect, useState, useContext, useRef } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import io from 'socket.io-client';
+import { UserContext } from '../context/UserContext';
 import "./ChatRoom.css";
-import Modal from "react-modal";
-import createToast from "../utils/toast";
-
+import Modal from 'react-modal';
+import { useCallback } from 'react';
+import createToast from '../utils/toast';
+import { useNavigate } from 'react-router-dom';
 const ChatRoom = () => {
-	const { id } = useParams();
-	const [messages, setMessages] = useState([]);
-	const [message, setMessage] = useState("");
-	const [loading, setLoading] = useState(true);
-	const { user } = useContext(UserContext);
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const [promRequest, setPromRequest] = useState(null);
-	const socket = useRef(null);
-	const messagesEndRef = useRef(null);
-	const navigate = useNavigate();
-	const hasShownNotification = useRef(false);
-	const hasShownNotificationRequest = useRef(false);
+    const { id } = useParams();
+    const [messages, setMessages] = useState([]);
+    const [message, setMessage] = useState('');
+    const [loading, setLoading] = useState(true);
+    const { user } = useContext(UserContext);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    // const socket = useRef(null);
+    const messagesEndRef = useRef(null);
+    const hasShownNotification = useRef(false);
+    const hasShownNotificationrequest = useRef(false);
+    const [promRequest, setPromRequest] = useState(null);
+    const userData = localStorage.getItem('user');
+    const parsedUser = JSON.parse(userData);
+    const token = parsedUser.token;
+    const ids = localStorage.getItem('ids');
+    // console.log(typeof ids, ids);   
+    // console.log(localStorage.getItem('ids'), "ddddDDDD")
+    const storedData = JSON.parse(ids);
+    // console.log(storedData, "Parsed Data");
+    const userId = storedData.data.id;
+    const userName = storedData.data.name;
+    const navigate = useNavigate();
+    // console.log(userName)
+    // console.log(userId, "sender id");
 
-	const userData = localStorage.getItem("user");
-	const parsedUser = userData ? JSON.parse(userData) : null;
-	const token = parsedUser ? parsedUser.token : null;
+    // const socket = useRef(null);
+    const socket = io.connect('http://localhost:3000');
 
-	const ids = localStorage.getItem("ids");
-	const storedData = ids ? JSON.parse(ids) : null;
-	const userId = storedData ? storedData.data.id : null;
-	const userName = storedData ? storedData.data.name : "Unknown";
+    useEffect(() => {
 
-	// Redirect if the user or ids is not available
-	useEffect(() => {
-		if (!userData || !ids) {
-			navigate("/");
-		}
-	}, [navigate, userData, ids]);
+        // socket.current = io('http://localhost:3000', { transports: ['websocket'] });
 
-	useEffect(() => {
-		if (!userId) return;
+        socket.on('connect', () => {
+            console.log('Socket connected:', socket.id);
+            socket.emit('registerUser', userId); // Register the user
+            console.log('User registered with userId:', userId);
+        });
 
-		socket.current = io("https://lol-2eal.onrender.com");
+        // socket.emit('registerUser', userId); 
 
-		socket.current.emit("registerUser", userId);
+        // Set up message listener
+        socket.on('receiveMessage', (data) => {
+            console.log('Message received:', data);
+            setMessages((prevMessages) => [...prevMessages, data]);
+            if (data.senderId !== userId) {
+                console.log('Message from another user:', data);
+            }
+        });
 
-		socket.current.on("receiveMessage", (data) => {
-			if (data.senderId === id || data.receiverId === id) {
-				setMessages((prevMessages) => [...prevMessages, data]);
-			}
-		});
+        // Clean up the connection when component unmounts
+        return () => {
+            socket.disconnect();
+        };
+    },);
 
-		return () => {
-			socket.current.off("receiveMessage");
-			socket.current.disconnect();
-		};
-	}, [userId, id]);
+
+
+    if (!ids || !localStorage.getItem('user')) {
+
+        navigate('/');
+
+
+    }
+
 
     useEffect(() => {
         // Fetch chat messages between sender and receiver
@@ -192,33 +210,34 @@ const ChatRoom = () => {
                         Authorization: `Bearer ${token}`,
                     },
                     params: {
-                        senderId: userId,  
-                        receiverId: id,  
+                        senderId: userId,
+                        receiverId: id,
                     }
                 });
                 setMessages(response.data.messages);
-                console.log(response.data.messages)
+                // console.log(response.data.messages)
                 setLoading(false);
             } catch (error) {
                 console.error("Error fetching messages:", error);
             }
         };
 
-		fetchMessages();
-	}, [id, token, userId]);
+        fetchMessages();
 
-	useEffect(() => {
-		if (messagesEndRef.current) {
-			messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
-		}
-	}, [messages]);
+    }, [id, token, userId]);
+
+    useEffect(() => {
+        if (messagesEndRef.current) {
+            messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [messages]);
 
     const sendMessage = async () => {
         if (message.trim()) {
             try {
                 await axios.post('http://localhost:3000/send-message', {
                     receiverId: id,
-                    senderId: userId,  
+                    senderId: userId,
                     message: message
                 }, {
                     headers: {
@@ -226,14 +245,14 @@ const ChatRoom = () => {
                     }
                 });
 
-              
-                socket.current.emit('sendMessage', {
+
+                socket.emit('sendMessage', {
                     receiverId: id,
                     message: message,
                     senderId: userId
                 });
 
-               
+
                 setMessages((prevMessages) => [
                     ...prevMessages,
                     { senderId: userId, message }
@@ -241,7 +260,7 @@ const ChatRoom = () => {
                 setMessage('');
             } catch (error) {
                 console.error("Error sending message:", error);
-                createToast("Error sending message:","error")
+                createToast("Error sending message:", "error")
             }
         }
     };
@@ -257,15 +276,16 @@ const ChatRoom = () => {
                 }
             });
 
-			if (response.data.success) {
-				createToast("Prom night request sent!", "success");
-				setPromRequest({ senderId: userId, receiverId: id });
-			}
-		} catch (error) {
-			console.error("Error sending prom night request:", error);
-			createToast("Error sending prom night request", "error");
-		}
-	};
+            if (response.data.success) {
+                // alert('Prom night request sent!');
+                createToast("Prom night request sent!", "success")
+                setPromRequest({ senderId: userId, receiverId: id });
+            }
+        } catch (error) {
+            console.error("Error sending prom night request:", error);
+            createToast("Error sending prom night request:", "error")
+        }
+    };
 
     const checkPromRequest = useCallback(async () => {
         try {
@@ -275,15 +295,22 @@ const ChatRoom = () => {
                 }
             });
 
-			if (response.data.promRequest) {
-				setPromRequest(response.data.promRequest);
-				setIsModalOpen(true);
-				hasShownNotificationRequest.current = true;
-			}
-		} catch (error) {
-			console.error("Error checking prom night request:", error);
-		}
-	}, [userId, token]);
+            if (response.data.promRequest) {
+                setPromRequest(response.data.promRequest);
+                console.log(response.data.promRequest);
+            }
+            const newRequests = response.data.promRequests;
+
+            if (newRequests.length > 0) {
+                // If a new request is received, set it to state
+                setPromRequest(newRequests[0]);
+                setIsModalOpen(true);
+                hasShownNotificationrequest.current = true;
+            }
+        } catch (error) {
+            console.error("Error checking prom night request:", error);
+        }
+    }, [userId, token]);
 
     useEffect(() => {
         const interval = setInterval(() => {
@@ -296,124 +323,114 @@ const ChatRoom = () => {
     const acceptPromNight = async () => {
         try {
             const response = await axios.post('http://localhost:3000/acceptPromNight', {
-                requestId: promRequest._id 
+                requestId: promRequest._id
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
 
-			if (response.data.success) {
-				createToast("Prom night request accepted!", "success");
-				setPromRequest(null);
-			}
-		} catch (error) {
-			console.error("Error accepting prom night request:", error);
-			createToast("Error accepting prom night request", "error");
-		}
-	};
+            if (response.data.success) {
+                // alert('Prom night request accepted!');
+                createToast("Prom night request accepted!", "success")
+                setPromRequest(null);
+            }
+        } catch (error) {
+            console.error("Error accepting prom night request:", error);
+            createToast("Error accepting prom night request:", "error")
+        }
+    };
 
     const cancelPromNight = async () => {
         try {
             const response = await axios.post('http://localhost:3000/cancelPromNight', {
-                requestId: promRequest._id  
+                requestId: promRequest._id
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
 
-			if (response.data.success) {
-				createToast("Prom night request canceled!", "success");
-				setPromRequest(null);
-			}
-		} catch (error) {
-			console.error("Error canceling prom night request:", error);
-			createToast("Error canceling prom night request", "error");
-		}
-	};
+            if (response.data.success) {
+                // alert('Prom night request canceled!');
+                createToast("Prom night request canceled!", "success");
+                setPromRequest(null);
+            }
+        } catch (error) {
+            console.error("Error canceling prom night request:", error);
+            createToast("Error canceling prom night request:", "error")
+        }
+    };
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setPromRequest(null);
+    };
+    return (
+        <div className="chat-room">
 
-	const closeModal = () => {
-		setIsModalOpen(false);
-		setPromRequest(null);
-	};
+            <div className="hlo" style={{display:"flex",
+                //  position: "fixed",
+                 top: "80px",
+                 flexDirection:"row",
+                 // color:"black",
+                 backgroundColor:"#F5EFFF",
+                 textAlign: "center",
+                 alignItems:"center",
+                 padding: "10px",
+                 color: "#7E60BF",
+                 justifyContent:"space-between",
+            }}>
+                <h3 style={{
+                   
+                }}>Chat with {id}</h3>
 
-	return (
-		<div className="chat-room">
-			<h3
-				style={{
-					position: "fixed",
-					top: "80px",
-					left: 0,
-					right: 0,
-					textAlign: "center",
-					padding: "10px",
-					color: "#7E60BF",
-				}}
-			>
-				Chat with {userName}
-			</h3>
-			{loading ? (
-				<p>Loading messages...</p>
-			) : (
-				<div className="messages">
-					{messages.map((msg, index) => (
-						<div
-							key={index}
-							className={`message ${
-								msg.senderId === userId
-									? "outgoing"
-									: "incoming"
-							}`}
-						>
-							{msg.message}
-						</div>
-					))}
-					<div ref={messagesEndRef}></div>
-				</div>
-			)}
-			<div className="input-container" style={{ display: "flex" }}>
-				<input
-					className="input-chat"
-					type="text"
-					value={message}
-					onChange={(e) => setMessage(e.target.value)}
-					placeholder="Type a message..."
-				/>
-				<button className="chatbutton" onClick={sendMessage}>
-					Send
-				</button>
-			</div>
-			<button
-				style={{
-					position: "absolute",
-					top: "50%",
-					left: "-60px",
-					transform: "translateY(-50%) rotate(90deg)",
-					color: "#fff",
-					backgroundColor: "#7E60BF",
-					border: "none",
-					padding: "10px 20px",
-					cursor: "pointer",
-				}}
-				onClick={requestPromNight}
-			>
-				Request Prom Night
-			</button>
-			<Modal isOpen={isModalOpen} onRequestClose={closeModal}>
-				<h2>New Prom Night Request!</h2>
-				<p>User {promRequest?.requester_id} has sent you a request.</p>
-				<button onClick={closeModal}>Close</button>
-			</Modal>
-			{promRequest && (
-				<div className="prom-request">
-					<h4>Prom Night Request Received!</h4>
-					<button onClick={acceptPromNight}>Accept</button>
-					<button onClick={cancelPromNight}>Cancel</button>
-				</div>
-			)}
-		</div>
-	);
+                <button style={{
+                     
+                }} onClick={requestPromNight}>Request Prom Night</button>
+
+
+            </div>
+            {loading ? (
+                <p>Loading messages...</p>
+            ) : (
+                <div className="messages">
+                    {messages.map((msg, index) => (
+                        <div key={index} className={`message ${msg.sender_id === userId ? 'outgoing' : 'incoming'}`}>
+                            {msg.message}
+                        </div>
+                    ))}
+                    <div ref={messagesEndRef}></div>
+                </div>
+            )}
+            <div className="hello" style={{
+                display: "flex"
+
+            }}>
+
+                <input className='input-chat'
+                    type="text"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Type a message..."
+                />
+                <button className='chatbutton' onClick={sendMessage}>Send</button>
+            </div>
+             
+            <Modal isOpen={isModalOpen} onRequestClose={closeModal}>
+                <h2>New Prom Night Request!</h2>
+                <p>User {promRequest?.requester_id} has sent you a request.</p>
+                <button onClick={closeModal}>Close</button>
+            </Modal>
+
+            {promRequest && (
+                <div className="prom-request">
+                    <h4>Prom Night Request Received!</h4>
+                    <button onClick={acceptPromNight}>Accept</button>
+                    <button onClick={cancelPromNight}>Cancel</button>
+                </div>
+            )}
+        </div>
+    );
 };
 
 export default ChatRoom;

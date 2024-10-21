@@ -26,6 +26,8 @@ const SignUp = () => {
 		bio: "",
 		profileImage1: "",
 		profileImage2: "",
+		year:"",
+		hall:"",
 	};
 
 	const validationSchema = Yup.object({
@@ -39,6 +41,8 @@ const SignUp = () => {
 			.required("Required"),
 		age: Yup.number().required("Required"),
 		PhoneNO: Yup.number().required("Required"),
+		year: Yup.number().required("Required"),
+		hall: Yup.string().required("Required"),
 		rollNo: Yup.string().required("Required"),
 		gender: Yup.string().required("Required"),
 		bio: Yup.string().required("Required"),
@@ -229,6 +233,24 @@ const SignUp = () => {
 								placeholder="Roll No"
 							/>
 							<ErrorMessage name="rollNo" component="div" />
+
+
+							<Field
+								type="number"
+								name="year"
+								placeholder="year"
+							/>
+							<ErrorMessage name="year" component="div" />
+
+
+							<Field
+								type="text"
+								name="hall"
+								placeholder="hall"
+							/>
+							<ErrorMessage name="hall" component="div" />
+
+
 
 							<Field
 								type="number"
