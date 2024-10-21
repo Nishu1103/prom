@@ -35,7 +35,7 @@ function App() {
     useEffect(() => {
         const checkUserAuthentication = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user', {
+                const response = await axios.get('https://lol-2eal.onrender.com/user', {
                     headers: {
                         Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
                     },

@@ -30,7 +30,7 @@ function InvitationForm() {
     setErrorMessage('');
 
     try {
-      const response = await axios.post(`http://localhost:3000/promInvite/${inviteCode}`, formData);
+      const response = await axios.post(`https://lol-2eal.onrender.com/promInvite/${inviteCode}`, formData);
       if (response.status === 201) {
         alert('Invitation accepted successfully!');
         navigate('/'); // Navigate to the homepage or any success page

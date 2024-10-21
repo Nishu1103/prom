@@ -30,7 +30,7 @@ const Notification = () => {
     useEffect(() => {
         const fetchPromRequests = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/promnight/check/${userId}`, {
+                const response = await axios.get(`https://lol-2eal.onrender.com/promnight/check/${userId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }
@@ -59,7 +59,7 @@ const Notification = () => {
     const acceptRequest = async () => {
         if (selectedRequest) {
             try {
-                const response = await axios.post('http://localhost:3000/acceptPromNight', {
+                const response = await axios.post('https://lol-2eal.onrender.com/acceptPromNight', {
                     requestId: selectedRequest.id,  
                 }, {
                     headers: {
@@ -83,7 +83,7 @@ const Notification = () => {
     const cancelRequest = async () => {
         if (selectedRequest) {
             try {
-                const response = await axios.post('http://localhost:3000/cancelPromNight', {
+                const response = await axios.post('https://lol-2eal.onrender.com/cancelPromNight', {
                     requestId: selectedRequest.id, // Use the request ID to cancel
                 }, {
                     headers: {
