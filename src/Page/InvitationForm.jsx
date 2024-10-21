@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import "./InvitationForm.css"
 
 function InvitationForm() {
   const { inviteCode } = useParams(); // Get the invite code from the URL

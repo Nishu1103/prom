@@ -3,7 +3,7 @@
     max-width: 500px;
     margin: 50px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    background-color: #E4B1F0;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Arial', sans-serif;
@@ -11,7 +11,7 @@
   
   .invitation-form-container h2 {
     text-align: center;
-    color: #333;
+    color: #7E60BF;
     margin-bottom: 20px;
   }
   
@@ -38,12 +38,12 @@
   }
   
   input[type="text"]:focus {
-    border-color: #007BFF;
+    border-color: #7E60BF;
     outline: none;
   }
   
   button[type="submit"] {
-    background-color: #007BFF;
+    background-color: #7E60BF;
     color: white;
     padding: 12px;
     border: none;
@@ -54,7 +54,7 @@
   }
   
   button[type="submit"]:hover {
-    background-color: #0056b3;
+    background-color: #7E60BF;
   }
   
   button[type="submit"]:disabled {

@@ -3,6 +3,7 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../context/UserContext';
 import axios from 'axios';
 import Modal from 'react-modal';
+import createToast from '../utils/toast';
 
 const TopNavbar = () => {
   const { user, isAuthorized } = useContext(UserContext);
@@ -46,6 +47,7 @@ const TopNavbar = () => {
       
     );
       setSuccessMessage('Invitation sent successfully!');
+      createToast("Invitation sent successfully!","success")
       setPartnerName('');
       setPartnerEmail('');
       console.log(response)
@@ -53,6 +55,7 @@ const TopNavbar = () => {
     } catch (error) {
       setErrorMessage('Failed to send invitation. Please try again.');
       console.log(error)
+      createToast("Failed to send invitation. Please try again." ,"error")
     } finally {
       setLoading(false);
     }
