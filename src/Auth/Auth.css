@@ -1,17 +1,16 @@
 /* Auth.css */
 .auth-container {
-  max-width: 400px;
+  min-width: 300px;
   height: 600px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 2rem;
-  top:20%;
+  top: 2%;
   background-color: #E4B1F0;  
   border-radius: 15px;  
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
-  transform: translateY(50px);
 }
 
 h2 {
@@ -84,20 +83,25 @@ button:hover {
   margin: 1rem 0; /* Space between buttons and the link */
 }
 
+.auth-containers {
+  height: 95vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Bubble theme styling for the authentication page */
 .bubble-auth-container {
   max-width: 400px;
   height: 400px;
-  margin: 0 auto;
+  /* margin: 0 auto; */
   padding: 2rem;
-  top:20%;
+  /* top:20%; */
   background-color: #E4B1F0;  
   border-radius: 15px;  
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);  
-  overflow-y: scroll;
-  overflow-x: hidden;
   position: relative;
-  transform: translateY(50px);
+  /* transform: translateY(50px); */
 }
 
 .bubble-title {
@@ -181,4 +185,4 @@ button:hover {
   height: 30px !important;
 }
 
- /* https://lol-2eal.onrender.com/ */
+ /* / */

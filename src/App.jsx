@@ -17,6 +17,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Profile from './Page/Profile';
 // import { useNavigate } from 'react-router-dom';
+
+axios.defaults.baseURL = 'https://lol-2eal.onrender.com';
+// axios.defaults.baseURL = 'http://localhost:3000';
+
 function App() {
     // const nevigate=useNavigate();  
     const { setUsers, setUser, isAuthorized, setIsAuthorized } = useContext(UserContext);
@@ -29,7 +33,7 @@ function App() {
     useEffect(() => {
         const checkUserAuthentication = async () => {
             try {
-                const response = await axios.get('https://lol-2eal.onrender.com/user', {
+                const response = await axios.get('/user', {
                     headers: {
                         Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
                     },
@@ -46,7 +50,7 @@ function App() {
                     localStorage.setItem('ids', JSON.stringify(response.data));
                     // console.log(localStorage.getItem('ids'), "ddddDDDD")
                     const storedData = JSON.parse(localStorage.getItem('ids'));
-                    console.log(storedData, "Parsed Data");
+                    // console.log(storedData, "Parsed Data");
                 } else {
                     setIsAuthorized(false);
                 }

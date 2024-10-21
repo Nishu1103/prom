@@ -12,10 +12,6 @@
     /* transition: transform 0.3s ease-in-out; */
 }
 
-.profile-container:hover {
-    transform: translateY(-5px); /* Subtle hover effect */
-}
-
 /* Image container with a circular profile image */
 .image-container {
     border-radius: 50%;
@@ -36,6 +32,10 @@
 .info-container {
     text-align: center;
     margin-top: 15px;
+    background-color: #ffffff66;
+    padding: 10px;
+
+    border-radius: 20px;
 }
 
 /* Name styling */
@@ -51,6 +51,22 @@
     font-size: 16px;
     color: #7E60BF;
     margin: 5px 0;
+}
+
+.logOut {
+    background-color: #7E60BF;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.logOut:hover {
+    background-color: #6B4A9A;
+    scale: 1.01;
 }
 
 /* Adding responsive design for smaller screens */
