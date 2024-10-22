@@ -14,14 +14,13 @@
   overflow: hidden;
 }
 
-/* Styling for the logo */
+ 
 .top-navbar .logo img {
   height: 50px;
   width: auto;
   max-width: 100%;
 }
-
-/* Title styling */
+ 
 .top-navbar .title {
   font-size: 24px;
   color: #fff;
@@ -30,7 +29,7 @@
   letter-spacing: 1.2px;
   position: absolute;
   left: 50%;
-  transform: translateX(-50%); /* Center the title */
+  transform: translateX(-50%);  
 }
 
 /* Bubble background effect */
@@ -44,21 +43,7 @@
   opacity: 0.7;
 }
 
-/* .top-navbar::before {
-  width: 150px;
-  height: 150px;
-  top: -50px;
-  left: 20%;
-  animation-duration: 6s;
-}
-
-.top-navbar::after {
-  width: 200px;
-  height: 200px;
-  top: -70px;
-  left: 70%;
-  animation-duration: 4s;
-} */
+ 
 
 /* Animation for floating effect */
 @keyframes float {
@@ -123,4 +108,12 @@
 .ReactModal__Content{
   top: -180px;
   position: relative;
+}
+
+.invite-modal{
+  position: fixed;
+  top: 15rem;
+  left: 3rem;
+  right: 3rem;
+  max-width: 400px;
 }

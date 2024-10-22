@@ -127,6 +127,7 @@ const Notification = () => {
                 <p>User {selectedRequest?.requester_id} has sent you a prom night request.</p>
                 <button onClick={acceptRequest}>Yes, Accept</button>
                 <button onClick={cancelRequest}>No, Cancel</button>
+                <button onClick={closeModal}>Close</button>
             </Modal>
         </div>
     );
