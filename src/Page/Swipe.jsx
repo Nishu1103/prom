@@ -20,6 +20,7 @@ const Swipe = () => {
 	const parsedUser = userData ? JSON.parse(userData) : null;
 	const token = parsedUser ? parsedUser.token : null;
 	const [showSecondaryImage, setShowSecondaryImage] = useState(false);
+	const [imageLoaded, setImageLoaded] = useState(false);
 	// console.log(token)
 
 	const navigate = useNavigate();
@@ -30,6 +31,11 @@ const Swipe = () => {
 		navigate("/");
 		setIsAuthorized(false);
 	}
+
+
+	const handleImageLoad = () => {
+		setImageLoaded(true);  
+	};
 
     const likeUser = async (likedUserId) => {
         if (!user || !token) {
@@ -148,15 +154,19 @@ const Swipe = () => {
 				></span>
 			</div>
 			<div className={`card ${animation}`}>
+
+			 
+
 				<img
 					src={currentImage}
 					alt={currentUser.name}
 					className="user-image"
-					onClick={handleImageClick} // Click to toggle image
+					onClick={handleImageClick}  
+					 
 				/>
 
 				<div className="user-info">
-					<h2 style={{ color: "white" }}>{currentUser.name}</h2>
+					<h2 style={{ color: "#433878" }}>{currentUser.name}</h2>
 					<h3>{currentUser.bio}</h3>
 				</div>
 				<div className="action-buttons">
