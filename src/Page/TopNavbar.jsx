@@ -47,19 +47,25 @@ const TopNavbar = () => {
       
     );
       setSuccessMessage('Invitation sent successfully!');
-      createToast("Invitation sent successfully!","success")
+      createToast('Invitation sent successfully!',"success")
       setPartnerName('');
       setPartnerEmail('');
-      console.log(response)
+      console.log(response.message)
       closeModal();
     } catch (error) {
-      setErrorMessage('Failed to send invitation. Please try again.');
-      console.log(error)
-      createToast("Failed to send invitation. Please try again." ,"error")
+      if (error.response && error.response.status === 409) {
+        // Handle specific 409 error
+        setErrorMessage('Already matched with someone.');
+        createToast('Already matched with someone.', 'error');
+      } else {
+        // Handle other errors
+        setErrorMessage('Failed to send invitation. Please try again.');
+        createToast('Failed to send invitation. Please try again.', 'error');
+      }
+      console.log(error);
     } finally {
       setLoading(false);
-    }
-  };
+    }}
 
   return (
     <nav className="top-navbar">

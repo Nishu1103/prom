@@ -162,7 +162,7 @@ const ChatRoom = () => {
     // console.log(userId, "sender id");
 
     // const socket = useRef(null);
-    const socket = io.connect('http://localhost:3000');
+    const socket = io.connect('https://lol-2eal.onrender.com');
 
     useEffect(() => {
 
@@ -282,10 +282,27 @@ const ChatRoom = () => {
                 setPromRequest({ senderId: userId, receiverId: id });
             }
         } catch (error) {
-            console.error("Error sending prom night request:", error);
-            createToast("Error sending prom night request:", "error")
-        }
-    };
+            if (error.response) {
+                // Handle specific status codes
+                const status = error.response.status;
+                if (status === 409) {
+                  createToast('You are already matched with someone.', 'error');
+                } else if (status === 408) {
+                  createToast('The requested user is already matched with someone.', 'error');
+                } else if (status === 404) {
+                  createToast('Requested user does not exist.', 'error');
+                } else if (status === 411) {
+                  createToast('Request already sent.', 'error');
+                } else {
+                  createToast('Error sending prom night request. Please try again.', 'error');
+                }
+              } else {
+                // Generic error handling
+                createToast('Error sending prom night request. Please try again.', 'error');
+              }
+              console.log(error);
+            }
+          };
 
     const checkPromRequest = useCallback(async () => {
         try {
@@ -322,24 +339,44 @@ const ChatRoom = () => {
     }, [checkPromRequest]);
     const acceptPromNight = async () => {
         try {
-            const response = await axios.post('https://lol-2eal.onrender.com/acceptPromNight', {
-                requestId: promRequest._id
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
+            const response = await axios.post(
+                'https://lol-2eal.onrender.com/acceptPromNight',
+                {
+                    requestId: promRequest._id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                 }
-            });
-
+            );
+    
             if (response.data.success) {
-                // alert('Prom night request accepted!');
-                createToast("Prom night request accepted!", "success")
+                // Success case
+                createToast('Prom night request accepted!', 'success');
                 setPromRequest(null);
             }
         } catch (error) {
-            console.error("Error accepting prom night request:", error);
-            createToast("Error accepting prom night request:", "error")
+            if (error.response) {
+                const status = error.response.status;
+                // Handle specific status codes
+                if (status === 409) {
+                    createToast('You are already matched with someone.', 'error');
+                } else if (status === 408) {
+                    createToast('Requester is already matched with someone.', 'error');
+                } else if (status === 404) {
+                    createToast('No pending request found.', 'error');
+                } else {
+                    createToast('Error accepting prom night request. Please try again.', 'error');
+                }
+            } else {
+                // Generic error handling
+                createToast('Error accepting prom night request. Please try again.', 'error');
+            }
+            console.error('Error accepting prom night request:', error);
         }
     };
+    
 
     const cancelPromNight = async () => {
         try {

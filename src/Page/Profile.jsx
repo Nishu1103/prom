@@ -46,6 +46,8 @@ const Profile = () => {
 				<p className="email">Email: {userData.email}</p>
 				<p className="bio">Bio: {userData.bio}</p>
 				<p className="roll no">Roll No: {userData.rollNo}</p>
+				<p className="Phone no">Roll No: {userData.PhoneNo}</p>
+				<p className="hall">Roll No: {userData.hall}</p>
 				{/* Add more details as needed */}
 			</div>
 

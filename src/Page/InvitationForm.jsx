@@ -37,12 +37,16 @@ function InvitationForm() {
         navigate('/'); // Navigate to the homepage or any success page
       }
     } catch (error) {
-      setErrorMessage('Failed to submit form. Please check the details or the invite may have expired.');
-      console.error('Error accepting invitation:', error);
-    } finally {
-      setLoading(false);
+      if (error.response && error.response.status === 404) {
+        setErrorMessage('Invalid or expired invitation. Please check the invite code.');
+    } else {
+        setErrorMessage('Failed to submit form. Please try again.');
     }
-  };
+    console.error('Error accepting invitation:', error);
+} finally {
+    setLoading(false);
+}
+};
 
   return (
     <div className="invitation-form-container">

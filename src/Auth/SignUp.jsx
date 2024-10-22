@@ -20,7 +20,7 @@ const SignUp = () => {
 		password: "",
 		confirmPassword: "",
 		age: "",
-		PhoneNO: "",
+		PhoneNo: "",
 		rollNo: "",
 		gender: "",
 		bio: "",
@@ -40,7 +40,7 @@ const SignUp = () => {
 			.oneOf([Yup.ref("password")], "Passwords must match")
 			.required("Required"),
 		age: Yup.number().required("Required"),
-		PhoneNO: Yup.number().required("Required"),
+		PhoneNo: Yup.number().required("Required"),
 		year: Yup.number().required("Required"),
 		hall: Yup.string().required("Required"),
 		rollNo: Yup.string().required("Required"),
@@ -72,7 +72,7 @@ const SignUp = () => {
 		console.log("Form Values:", values);
 
     try {
-      const response = await axios.post('https://lol-2eal.onrender.com/register', formData, {
+      const response = await axios.post('http://localhost:3000/register', formData, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -255,10 +255,10 @@ const SignUp = () => {
 
 							<Field
 								type="number"
-								name="PhoneNO"
+								name="PhoneNo"
 								placeholder="Mobile No"
 							/>
-							<ErrorMessage name="PhoneNO" style={{ color: 'red' , fontSize:'10px'}} component="div" />
+							<ErrorMessage name="PhoneNo" style={{ color: 'red' , fontSize:'10px'}} component="div" />
 
 							<Field type="number" name="age" placeholder="Age" />
 							<ErrorMessage name="age" style={{ color: 'red' , fontSize:'10px'}} component="div" />
