@@ -107,11 +107,12 @@ const ChatRoom = () => {
     }, [messages]);
 
     const sendMessage = async () => {
+
         if (message.trim()) {
             try {
                 await axios.post('http://localhost:3000/send-message', {
                     receiverId: id,
-                    senderId: userId,
+                    sender_id: userId,
                     message
                 }, {
                     headers: {
@@ -123,13 +124,13 @@ const ChatRoom = () => {
                 socket.current.emit('sendMessage', {
                     receiverId: id,
                     message,
-                    senderId: userId
+                    sender_id: userId
                 });
 
 
                 setMessages((prevMessages) => [
                     ...prevMessages,
-                    { senderId: userId, message }
+                    { sender_id: userId, message }
                 ]);
                 setMessage('');
             } catch (error) {
@@ -307,6 +308,7 @@ const ChatRoom = () => {
             ) : (
                 <div className="messages">
                     {messages.map((msg, index) => (
+                        
                         <div key={index} className={`message ${msg.sender_id === userId ? 'outgoing' : 'incoming'}`}>
                             {msg.message}
                         </div>
