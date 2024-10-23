@@ -38,13 +38,13 @@ const Profile = () => {
 			setUserData(JSON.parse(storedUserData).data);
 		}
 
-		// fetchPartnerDetails();
+		fetchPartnerDetails();
 
-	},);
+	},[]);
 
 	const fetchPartnerDetails = async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/api/partner/${userId}`, {
+            const response = await axios.get(`https://lol-2eal.onrender.com/api/partner/${userId}`, {
                 headers: {
 					Authorization: `Bearer ${token}`,
                 }
@@ -59,7 +59,7 @@ const Profile = () => {
         }
 
     };
-	fetchPartnerDetails()
+	// fetchPartnerDetails()
 
 	
 

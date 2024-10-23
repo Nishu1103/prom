@@ -12,7 +12,7 @@
     /* transition: transform 0.3s ease-in-out; */
 }
 
-/* Image container with a circular profile image */
+ 
 .image-container {
     border-radius: 50%;
     overflow: hidden;
@@ -28,7 +28,7 @@
     object-fit: cover;
 }
 
-/* Information container */
+ 
 .info-container {
     text-align: center;
     margin-top: 15px;
@@ -46,7 +46,7 @@
     margin: 10px 0;
 }
 
-/* Email styling */
+ 
 .email {
     font-size: 16px;
     color: #7E60BF;
@@ -69,7 +69,7 @@
     scale: 1.01;
 }
 
-/* Adding responsive design for smaller screens */
+ 
 @media (max-width: 768px) {
     .profile-container {
         width: 90%;

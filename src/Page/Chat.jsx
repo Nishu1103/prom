@@ -22,7 +22,7 @@
 //         const fetchMatches = async () => {
 //             if (token) {
 //                 try {
-//                     const response = await axios.get('http://localhost:3000/matches', {
+//                     const response = await axios.get('https://lol-2eal.onrender.com/matches', {
 //                         headers: {
 //                             Authorization: `Bearer ${token}`
 //                         }
@@ -82,7 +82,7 @@ const Chat = () => {
     const navigate = useNavigate();  
 
     const [matches, setMatches] = useState([]);
-    const [likes, setLikes] = useState([]); // State to store users who liked you
+    const [likes, setLikes] = useState([]);  
     const userData = localStorage.getItem('user');
     const parsedUser = userData ? JSON.parse(userData) : null; 
     const token = parsedUser ? parsedUser.token : null;  
@@ -90,16 +90,22 @@ const Chat = () => {
     const storedData = JSON.parse(ids);
     const userId = storedData.data.id;
 
-    if( !localStorage.getItem('user')){
-        navigate('/');
-    }
+    useEffect(()=>{
+
+        if(!isAuthorized || !localStorage.getItem('user')) {
+        
+          navigate('/');
+        }
+      
+      
+      })
    
     useEffect(() => {
         const fetchMatchesAndLikes = async () => {
             if (token) {
                 try {
                     // Fetch matches
-                    const matchesResponse = await axios.get('http://localhost:3000/matches', {
+                    const matchesResponse = await axios.get('https://lol-2eal.onrender.com/matches', {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
@@ -111,7 +117,7 @@ const Chat = () => {
                     }
 
                     // Fetch users who liked you
-                    const likesResponse = await axios.get(`http://localhost:3000/likes/${userId}`, {
+                    const likesResponse = await axios.get(`https://lol-2eal.onrender.com/likes/${userId}`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }
@@ -136,7 +142,7 @@ const Chat = () => {
 
     return (
         <div className="chat-container">
-            {/* Likes section */}
+            
             <div className="likes-list">
                 <h3>Who Liked You</h3>
                 {likes.length > 0 ? (
@@ -156,7 +162,7 @@ const Chat = () => {
                 )}
             </div>
     
-            {/* Matches section */}
+           
             <div className="matches-list">
                 <h3>Your Matches</h3>
                 {matches.length > 0 ? (

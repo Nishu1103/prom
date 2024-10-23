@@ -57,27 +57,27 @@ const SignUp = () => {
 		// Append user details to formData
 		for (const key in values) {
 			if (key === "profileImage1" || key === "profileImage2") {
-				formData.append(key, values[key]); // Directly append the hash strings
+				formData.append(key, values[key]);  
 			} else {
 				formData.append(key, values[key]);
 			}
 		}
 
-		// Log FormData entries for debugging
+		 
 		for (let [key, value] of formData.entries()) {
 			console.log(key, value);
 		}
 
-		// Log form values
+		 
 		console.log("Form Values:", values);
 
     try {
-      const response = await axios.post('http://localhost:3000/register', formData, {
+      const response = await axios.post('https://lol-2eal.onrender.com/register', formData, {
         headers: {
           'Content-Type': 'application/json'
         }
       });
-      setUser(response.data); // Save the user in context
+      setUser(response.data);  
       // alert('User Registered Successfully!');
       createToast("User Registered Successfully!", "success")
       navigate('/');
@@ -132,7 +132,7 @@ const SignUp = () => {
 	const handleImageChange = async (event, setFieldValue) => {
 		const files = Array.from(event.currentTarget.files);
 
-		// Check that exactly two files are uploaded
+		 
 		if (files.length !== 2) {
 			alert("Please upload exactly two images.");
 			return;
@@ -140,7 +140,7 @@ const SignUp = () => {
 
 		try {
 			setUploadingPhoto(true);
-			// Upload images to Pinata and get their hashes
+			 
 			const uploadedHashes = await Promise.all(
 				files.map((file) => uploadToPinata(file))
 			);
@@ -170,7 +170,7 @@ const SignUp = () => {
 				"https://api.pinata.cloud/pinning/pinFileToIPFS",
 				formData,
 				{
-					maxBodyLength: Infinity, // Allow large files
+					maxBodyLength: Infinity,  
 					headers: {
 						"Content-Type": `multipart/form-data; boundary=${formData._boundary}`,
 						pinata_api_key: pinataApiKey,
@@ -178,14 +178,14 @@ const SignUp = () => {
 					},
 				}
 			);
-			const ipfsHash = response.data.IpfsHash; // Store the IPFS hash in a string
+			const ipfsHash = response.data.IpfsHash;  
 			console.log("IPFS hash is", ipfsHash);
 			setUploadingPhoto(false);
-			return ipfsHash; // Return the IPFS hash
+			return ipfsHash;  
 		} catch (error) {
 			console.error("Error uploading to Pinata:", error);
 
-			throw error; // Rethrow the error for handling in the calling function
+			throw error;  
 		}
 	};
 

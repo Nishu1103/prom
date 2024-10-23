@@ -44,7 +44,7 @@ const Swipe = () => {
         }
         try {
             const response = await axios.post(
-                'http://localhost:3000/like',
+                'https://lol-2eal.onrender.com/like',
                 { likedUserId },
                 {
                     headers: {
@@ -74,7 +74,7 @@ const Swipe = () => {
         }
         try {
             await axios.post(
-                'http://localhost:3000/dislike',
+                'https://lol-2eal.onrender.com/dislike',
                 { dislikedUserId },
                 {
                     headers: {

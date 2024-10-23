@@ -9,6 +9,7 @@ import Modal from 'react-modal';
 import { useCallback } from 'react';
 import createToast from '../utils/toast';
 import { useNavigate } from 'react-router-dom';
+import { IoMdArrowRoundBack } from "react-icons/io";
 const ChatRoom = () => {
     const { id } = useParams();
     const [messages, setMessages] = useState([]);
@@ -39,8 +40,8 @@ const ChatRoom = () => {
     
     useEffect(() => {
         
-        socket.current = io.connect('http://localhost:3000');
-        // socket.current = io('http://localhost:3000', { transports: ['websocket'] });
+        socket.current = io.connect('https://lol-2eal.onrender.com');
+        // socket.current = io('https://lol-2eal.onrender.com', { transports: ['websocket'] });
 
         socket.current.on('connect', () => {
             console.log('Socket connected:', socket.current.id);
@@ -59,7 +60,7 @@ const ChatRoom = () => {
             }
         });
 
-        // Clean up the connection when component unmounts
+         
         return () => {
             socket.current.disconnect();
         };
@@ -76,10 +77,10 @@ const ChatRoom = () => {
 
 
     useEffect(() => {
-        // Fetch chat messages between sender and receiver
+   
         const fetchMessages = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/messages/${id}`, {
+                const response = await axios.get(`https://lol-2eal.onrender.com/messages/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -110,7 +111,7 @@ const ChatRoom = () => {
 
         if (message.trim()) {
             try {
-                await axios.post('http://localhost:3000/send-message', {
+                await axios.post('https://lol-2eal.onrender.com/send-message', {
                     receiverId: id,
                     sender_id: userId,
                     message
@@ -142,7 +143,7 @@ const ChatRoom = () => {
 
     const requestPromNight = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/requestPromNight', {
+            const response = await axios.post('https://lol-2eal.onrender.com/requestPromNight', {
                 senderId: userId,
                 receiverId: id
             }, {
@@ -181,7 +182,7 @@ const ChatRoom = () => {
 
     const checkPromRequest = useCallback(async () => {
         try {
-            const response = await axios.get(`http://localhost:3000/promnight/check/${userId}`, {
+            const response = await axios.get(`https://lol-2eal.onrender.com/promnight/check/${userId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
@@ -194,7 +195,7 @@ const ChatRoom = () => {
             const newRequests = response.data.promRequests;
 
             if (newRequests.length > 0) {
-                // If a new request is received, set it to state
+    
                 setPromRequest(newRequests[0]);
                 setIsModalOpen(true);
                 hasShownNotificationrequest.current = true;
@@ -215,7 +216,7 @@ const ChatRoom = () => {
     const acceptPromNight = async () => {
         try {
             const response = await axios.post(
-                'http://localhost:3000/acceptPromNight',
+                'https://lol-2eal.onrender.com/acceptPromNight',
                 {
                     requestId: promRequest._id,
                 },
@@ -227,7 +228,7 @@ const ChatRoom = () => {
             );
     
             if (response.data.success) {
-                // Success case
+ 
                 createToast('Prom night request accepted!', 'success');
                 setPromRequest(null);
             }
@@ -255,7 +256,7 @@ const ChatRoom = () => {
 
     const cancelPromNight = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/cancelPromNight', {
+            const response = await axios.post('https://lol-2eal.onrender.com/cancelPromNight', {
                 requestId: promRequest._id
             }, {
                 headers: {
@@ -277,6 +278,12 @@ const ChatRoom = () => {
         setIsModalOpen(false);
         setPromRequest(null);
     };
+
+    const handleBackClick = () => {
+        navigate(-1); // Go back to the previous page
+    };
+
+
     return (
         <div className="chat-room">
 
@@ -293,6 +300,22 @@ const ChatRoom = () => {
                  justifyContent:"space-between",
                  borderRadius: "20px 20px 20px 20px"
             }}>
+
+                <div className="back">
+                <IoMdArrowRoundBack  onClick={handleBackClick} style={{
+                    padding: "10px 20px",
+                    // backgroundColor: "#7E60BF",
+                    color: "black",
+                    border: "none",
+                    borderRadius: "10px",
+                    // widht:"100px",
+                    cursor: "pointer"
+
+                }}></IoMdArrowRoundBack>
+               
+
+                </div>
+
                 <h3 style={{
                    
                 }}>Chat with {id}</h3>

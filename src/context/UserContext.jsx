@@ -26,17 +26,17 @@ export const UserProvider = ({ children }) => {
                 setLoading(false);
                 return;
             }
-            setLoading(true); // Set loading to true before fetching
+            setLoading(true);  
             try {
-                // Send request with token authorization header
-                const response = await axios.get('http://localhost:3000/getUsers', {
+                 
+                const response = await axios.get('https://lol-2eal.onrender.com/getUsers', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
                 if (response.data && Array.isArray(response.data.data)) {
                     setUsers(response.data.data); 
-                    console.log(response.data.data)// Update users from the data property
+                    console.log(response.data.data) 
                 } else {
                     console.error('Fetched data is not an array', response.data);
                     setError('Fetched data is not in the expected format.');
@@ -45,7 +45,7 @@ export const UserProvider = ({ children }) => {
                 console.error('Error fetching users', error);
                 setError('Error fetching users. Please try again later.');
             } finally {
-                setLoading(false); // Set loading to false after fetching
+                setLoading(false);  
             }
         };
 
@@ -53,15 +53,15 @@ export const UserProvider = ({ children }) => {
 
         const checkUserAuthentication = async () => {
             try {
-                const response = await axios.get('http://localhost:3000/user', {
+                const response = await axios.get('https://lol-2eal.onrender.com/user', {
                     headers: {
-                        Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
+                        Authorization: `Bearer ${token}`,  
                     },
                 });
 
 
 				if (response.data) {
-					setUser(response.data); // Assuming the user data is returned in response.data.user
+					setUser(response.data);  
 					// setUsers(response.data)
 					// console.log(response.data, "kkk");
 					setIsAuthorized(true);

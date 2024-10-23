@@ -17,7 +17,7 @@
     display: flex;
     flex-direction: column;
     overflow-y: auto;
-    margin-bottom: 100px !important;
+    margin-bottom: 30px !important;
     padding: 20px;
 }
 
@@ -57,7 +57,7 @@
     background-color: #e50070;
 }
 
-/* Modal Styles */
+ 
 .modal {
     background: white;
     padding: 20px;
@@ -100,8 +100,8 @@
 .prom-request {
     margin-top: 20px;
     padding: 10px;
-    border: 1px solid #ffcc00; /* Prom request border color */
-    background-color: #fff8e1; /* Light yellow background */
+    border: 1px solid #ffcc00;  
+    background-color: #fff8e1; 
     border-radius: 5px;
     text-align: center;
 }
@@ -112,7 +112,7 @@
 }
 
 .prom-request button {
-    margin: 0 5px; /* Spacing between buttons */
+    margin: 0 5px;  
 }
 
 .hello {
@@ -149,7 +149,7 @@
 }
 
 .chatbutton {
-    background-color: #7E60BF; /* WhatsApp green color */
+    background-color: #7E60BF;  
     border: none;
     padding: 10px 20px;
     border-radius: 10%;
@@ -164,13 +164,13 @@
 }
 
 .chatbutton:hover {
-    background-color: #7E60BF; /* Slightly darker on hover */
+    background-color: #7E60BF;  
 }
 
 @media (max-width: 768px) {
     .hello {
         padding: 10px;
-        bottom: 0px; /* Adjust for mobile */
+        bottom: 0px;  
     }
 
     .input-chat {

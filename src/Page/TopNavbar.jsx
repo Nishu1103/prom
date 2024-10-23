@@ -22,11 +22,11 @@ const TopNavbar = () => {
     return null;
   }
 
-  // Handle modal open/close
+   
   const openModal = () => setModalIsOpen(true);
   const closeModal = () => setModalIsOpen(false);
 
-  // Handle invite submission
+  
   const handleInvite = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -34,7 +34,7 @@ const TopNavbar = () => {
     setSuccessMessage('');
 
     try {
-      const response = await axios.post('http://localhost:3000/invitePromPartner', {
+      const response = await axios.post('https://lol-2eal.onrender.com/invitePromPartner', {
         partnerName,
         partnerEmail
       },
@@ -54,11 +54,11 @@ const TopNavbar = () => {
       closeModal();
     } catch (error) {
       if (error.response && error.response.status === 409) {
-        // Handle specific 409 error
+       
         setErrorMessage('Already matched with someone.');
         createToast('Already matched with someone.', 'error');
       } else {
-        // Handle other errors
+         
         setErrorMessage('Failed to send invitation. Please try again.');
         createToast('Failed to send invitation. Please try again.', 'error');
       }
@@ -73,12 +73,12 @@ const TopNavbar = () => {
         <img src="/images/SF Prom Night.png" alt="logo" />
       </div>
 
-      {/* Invite Button */}
+      
       <button className="invite-btn" onClick={openModal}>
         Invite to Prom Night
       </button>
 
-      {/* Modal for the invite form */}
+      
       <Modal 
         isOpen={modalIsOpen} 
         onRequestClose={closeModal} 
@@ -106,8 +106,7 @@ const TopNavbar = () => {
             {loading ? 'Sending...' : 'Send Invite'}
           </button>
         </form>
-
-        {/* Success and Error Messages */}
+ 
         {successMessage && <p className="success-message">{successMessage}</p>}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 

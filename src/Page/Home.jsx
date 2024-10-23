@@ -23,7 +23,7 @@ useEffect(()=>{
 
   return (
     <div>
-      {/* <TopNavbar /> */}
+    
       <div className="home-content">
         {/* <h1>Welcome to SF Promnight</h1> */}
         <Swipe/>
