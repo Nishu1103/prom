@@ -75,6 +75,12 @@ const Profile = () => {
 
 	return (
 		<div className="profile-container">
+
+			 <div className="lll">
+
+			<h2 className="name">Name: {userData.name}</h2>
+			<div className="ppp" style={{display:"flex"}}>
+
 			<div className="image-container">
 				<img
 					src={`https://gateway.pinata.cloud/ipfs/${userData.profile_image}`} // Update with actual image URL or source
@@ -83,13 +89,17 @@ const Profile = () => {
 				/>
 			</div>
 			<div className="info-container">
-				<h2 className="name">Name: {userData.name}</h2>
+				
 				<p className="email">Email: {userData.email}</p>
 				<p className="bio">Bio: {userData.bio}</p>
 				<p className="roll no">Roll No: {userData.rollNo}</p>
 				<p className="Phone no">Phone no: {userData.PhoneNo}</p>
 				<p className="hall">Hall: {userData.hall}</p>
 				{/* Add more details as needed */}
+			</div>
+
+			</div>
+
 			</div>
 
 			{partnerData && (
@@ -108,7 +118,7 @@ const Profile = () => {
 						}
 					}>Partner Details</h3>
 
-					<div className="lll" style={{display:"flex", gap:"20px"}}>
+					<div className="llll" style={{display:"flex", gap:"20px"}}>
 
 
 					<div className="imgg">
