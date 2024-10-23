@@ -47,7 +47,7 @@ const TopNavbar = () => {
       
     );
       setSuccessMessage('Invitation sent successfully!');
-      createToast('Invitation sent successfully!',"success")
+      createToast('Invitation sent successfully! check mail',"success")
       setPartnerName('');
       setPartnerEmail('');
       console.log(response.message)

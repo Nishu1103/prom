@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import createToast from '../utils/toast';
 import "./InvitationForm.css";
 
 function InvitationForm() {
@@ -32,14 +33,17 @@ function InvitationForm() {
     try {
       const response = await axios.post(`https://lol-2eal.onrender.com/promInvite/${inviteCode}`, formData);
       if (response.status === 201) {
-        alert('Invitation accepted successfully!');
+        // alert('Invitation accepted successfully!');
+        createToast('Invitation accepted successfully! check mail', 'success');
         navigate('/');
       }
     } catch (error) {
       if (error.response && error.response.status === 404) {
         setErrorMessage('Invalid or expired invitation. Please check the invite code.');
+        createToast(error,"error")
       } else {
         setErrorMessage('Failed to submit form. Please try again.');
+        createToast("Failed to submit form. Please try again.","error")
       }
       console.error('Error accepting invitation:', error);
     } finally {
