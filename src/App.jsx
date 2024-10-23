@@ -96,7 +96,7 @@ function App() {
             {/* {!location.pathname.startsWith('/chatroom') && <BottomNavbar />}
             {!(location.pathname.startsWith('/chatroom') || location.pathname.match(/^\/prom-invite\/.+/)) && <BottomNavbar />} */}
 
-{showBottomNavbar && <BottomNavbar />}
+            {showBottomNavbar && <BottomNavbar />}
 
             
             <ToastContainer />

@@ -31,7 +31,7 @@ function InvitationForm() {
     setErrorMessage('');
 
     try {
-      const response = await axios.post(`https://lol-2eal.onrender.com/promInvite/${inviteCode}`, formData);
+      const response = await axios.post(`https://lol-2eal.onrender.com/prom-invite/${inviteCode}`, formData);
       if (response.status === 201) {
         // alert('Invitation accepted successfully!');
         createToast('Invitation accepted successfully! check mail', 'success');
