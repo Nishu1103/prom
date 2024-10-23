@@ -34,7 +34,7 @@ const TopNavbar = () => {
     setSuccessMessage('');
 
     try {
-      const response = await axios.post('https://lol-2eal.onrender.com/invitePromPartner', {
+      const response = await axios.post('http://localhost:3000/invitePromPartner', {
         partnerName,
         partnerEmail
       },

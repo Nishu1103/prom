@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes , useLocation } from 'react-router-dom';
 import SignUp from './Auth/SignUp';
 import SignIn from './Auth/SignIn';
 // import { UserProvider } from './context/UserContext';
@@ -20,7 +20,7 @@ import InvitationForm from './Page/InvitationForm';
 
 // import { useNavigate } from 'react-router-dom';
 
-axios.defaults.baseURL = 'https://lol-2eal.onrender.com';
+axios.defaults.baseURL = 'http://localhost:3000';
 // axios.defaults.baseURL = 'http://localhost:3000';
 
 function App() {
@@ -35,7 +35,7 @@ function App() {
     useEffect(() => {
         const checkUserAuthentication = async () => {
             try {
-                const response = await axios.get('https://lol-2eal.onrender.com/user', {
+                const response = await axios.get('http://localhost:3000/user', {
                     headers: {
                         Authorization: `Bearer ${token}`, // Assuming you store the token in localStorage
                     },
@@ -65,12 +65,20 @@ function App() {
         checkUserAuthentication();
     }, []);
 
+    const location = useLocation();
+    console.log(location.pathname);
+
+    const showBottomNavbar = !(
+        location.pathname.startsWith('/chatroom') || 
+        location.pathname.includes('/prom-invite/')
+      );
+
 
     return (
 
-        <Router>
-            {/* <Layout> */}
-            <TopNavbar/>
+        <>
+             {!location.pathname.startsWith('/prom-invite') && <TopNavbar/>}
+            
             <Routes>
                 <Route path="/" element={<SignIn />} />
                 <Route path="/signup" element={<SignUp />} />
@@ -83,10 +91,16 @@ function App() {
 
                 
             </Routes>
-            <BottomNavbar/>
-            {/* </Layout> */}
+            {/* <BottomNavbar/> */}
+
+            {/* {!location.pathname.startsWith('/chatroom') && <BottomNavbar />}
+            {!(location.pathname.startsWith('/chatroom') || location.pathname.match(/^\/prom-invite\/.+/)) && <BottomNavbar />} */}
+
+{showBottomNavbar && <BottomNavbar />}
+
+            
             <ToastContainer />
-        </Router>
+        </>
 
     );
 }

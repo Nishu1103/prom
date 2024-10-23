@@ -72,7 +72,7 @@ const SignUp = () => {
 		console.log("Form Values:", values);
 
     try {
-      const response = await axios.post('https://lol-2eal.onrender.com/register', formData, {
+      const response = await axios.post('http://localhost:3000/register', formData, {
         headers: {
           'Content-Type': 'application/json'
         }

@@ -89,3 +89,27 @@
         font-size: 14px;
     }
 }
+
+
+.partner-info {
+    margin-top: 30px;
+    padding: 10px;
+
+    border-radius: 20px;
+    background-color: #ffffff66;
+    /* border-radius: 12px; */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.partner-info h3 {
+    color: #00796b;
+    font-weight: bold;
+}
+
+.partner-info img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    object-fit: cover;
+}
