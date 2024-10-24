@@ -9,6 +9,7 @@ import Modal from 'react-modal';
 import { useCallback } from 'react';
 import createToast from '../utils/toast';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { IoMdArrowRoundBack } from "react-icons/io";
 const ChatRoom = () => {
     const { id } = useParams();
@@ -22,6 +23,8 @@ const ChatRoom = () => {
     const hasShownNotification = useRef(false);
     const hasShownNotificationrequest = useRef(false);
     const [promRequest, setPromRequest] = useState(null);
+    const [userStatus, setUserStatus] = useState({});
+    const [messageStatus, setMessageStatus] = useState({});
     const userData = localStorage.getItem('user');
     const parsedUser = JSON.parse(userData);
     const token = parsedUser.token;
@@ -37,6 +40,10 @@ const ChatRoom = () => {
     // console.log(userId, "sender id");
 
     const socket = useRef(null);
+
+    console.log(JSON.stringify(userStatus, null, 2)); // Pretty prints the object as a string.
+    const location = useLocation();
+    const { name } = location.state || {};
     
     useEffect(() => {
         
@@ -51,6 +58,25 @@ const ChatRoom = () => {
 
         // socket.emit('registerUser', userId); 
 
+
+        // socket.current.on('userOnline', (userId) => {
+        //     console.log(`${userId} is online`);
+             
+        // });
+    
+        // socket.current.on('userOffline', (data) => {
+        //     const { userId, lastSeen } = data;
+        //     console.log(`${userId} went offline, last seen at ${new Date(lastSeen).toLocaleString()}`);
+             
+        // });
+
+
+
+
+
+
+
+
         // Set up message listener
         socket.current.on('receiveMessage', (data) => {
             console.log('Message received:', data);
@@ -63,18 +89,67 @@ const ChatRoom = () => {
          
         return () => {
             socket.current.disconnect();
+         
         };
     }, [ userId ] );
 
 
+    useEffect(() => {
+        socket.current.on('messageDelivered', (data) => {
+            console.log(`Message delivered to ${data.receiverId}`);
+            setMessages(prevMessages => prevMessages.map(msg =>
+                msg.id === data.messageId ? { ...msg, delivered: 1 } : msg
+            ));
+        });
+    
+        socket.current.on('messageSeen', (data) => {
+            console.log(`Message seen: ${data.messageId}`);
+            setMessages(prevMessages => prevMessages.map(msg =>
+                msg.id === data.messageId ? { ...msg, seen: 1 } : msg
+            ));
+        });
+    
+        return () => {
+            socket.current.off('messageDelivered');
+            socket.current.off('messageSeen');
+        };
+    }, []);
+    
+    useEffect(() => {
+        socket.current.on('userOnline', (userId) => {
+            console.log(`${userId} is online`);
+            setUserStatus((prevStatus) => ({
+                ...prevStatus,
+                [userId]: 'online',
+            }));
+        });
+    
+        socket.current.on('userOffline', (data) => {
+            const { userId, lastSeen } = data;
+            console.log(`${userId} went offline, last seen at ${new Date(lastSeen).toLocaleString()}`);
+            setUserStatus((prevStatus) => ({
+                ...prevStatus,
+                [userId]: `last seen at ${new Date(lastSeen).toLocaleString()}`,
+            }));
+        });
+    
+        return () => {
+            socket.current.off('userOnline');
+            socket.current.off('userOffline');
+        };
+    }, []);
 
-    if (!ids || !localStorage.getItem('user')) {
 
-        navigate('/');
+    useEffect(()=>{
+        if (!ids || !localStorage.getItem('user')) {
 
+            navigate('/');
+    
+    
+        }
 
-    }
-
+    })
+    
 
     useEffect(() => {
    
@@ -315,10 +390,21 @@ const ChatRoom = () => {
                
 
                 </div>
+                <div className="chh">
+                    
+
+                    
+                </div>
 
                 <h3 style={{
+
+                    display:"flex",
+                    flexDirection:"column",
                    
-                }}>Chat with {id}</h3>
+                }}>{name || 'User'}
+                
+                 
+                </h3>
 
                 <button style={{
                      
@@ -334,6 +420,9 @@ const ChatRoom = () => {
                         
                         <div key={index} className={`message ${msg.sender_id === userId ? 'outgoing' : 'incoming'}`}>
                             {msg.message}
+                            <small>
+                                {messageStatus[msg.messageId] === 'Seen' ? '✓✓' : messageStatus[msg.messageId] === 'Delivered' ? '✓' : ''}
+                            </small>
                         </div>
                     ))}
                     <div ref={messagesEndRef}></div>
@@ -366,6 +455,8 @@ const ChatRoom = () => {
                     <button onClick={cancelPromNight}>Cancel</button>
                 </div>
             )}
+
+ 
         </div>
     );
 };

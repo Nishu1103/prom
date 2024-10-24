@@ -136,9 +136,10 @@ const Chat = () => {
         fetchMatchesAndLikes();
     }, [token]);
 
-    const startChat = (user) => {
-        navigate(`/chatroom/${user.id}`);
+    const startChat = (match) => {
+        navigate(`/chatroom/${match.id}`, { state: { name: match.name } });
     };
+    
 
     return (
         <div className="chat-container">

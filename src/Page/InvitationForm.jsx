@@ -42,6 +42,12 @@ function InvitationForm() {
         setErrorMessage('Invalid or expired invitation. Please check the invite code.');
         createToast(error,"error")
       } else {
+        if( error.response && error.response.status === 409) {
+
+          createToast(" This User Already matched with someone ","error")
+          setErrorMessage(' This User Already matched with someone');
+        }
+        else
         setErrorMessage('Failed to submit form. Please try again.');
         createToast("Failed to submit form. Please try again.","error")
       }

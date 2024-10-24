@@ -8,6 +8,7 @@ import "./Auth.css";
 import { useState } from "react";
 import createToast from "../utils/toast";
 import { Link } from "react-router-dom";
+// import "./sss.css"
 // import { createLogger } from 'vite';
 
 const SignUp = () => {
@@ -83,7 +84,14 @@ const SignUp = () => {
       navigate('/');
     } catch (error) {
       // alert('Error during registration');
-      createToast("Error during registration", "error")
+	  if(error.response && error.response.status === 409){
+		createToast("Email Already Exist","error")
+	  }else if (error.response && error.response.status === 408){
+		createToast("Phone Number Already Exist","error")
+	  }else if (error.response && error.response.status === 407	){
+		createToast("Roll Number Already Exist","success")
+	  } else 
+      createToast(error, "error")
       console.error(error);
     } finally {
       setSubmitting(false);

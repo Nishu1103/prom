@@ -93,7 +93,7 @@ const Profile = () => {
 				<p className="email">Email: {userData.email}</p>
 				<p className="bio">Bio: {userData.bio}</p>
 				<p className="roll no">Roll No: {userData.rollNo}</p>
-				<p className="Phone no">Phone no: {userData.PhoneNo}</p>
+				<p className="Phone no">Phone no: {userData.phoneNo}</p>
 				<p className="hall">Hall: {userData.hall}</p>
 				{/* Add more details as needed */}
 			</div>
