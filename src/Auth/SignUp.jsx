@@ -33,18 +33,27 @@ const SignUp = () => {
 
 	const validationSchema = Yup.object({
 		name: Yup.string().required("Required"),
-		email: Yup.string().email("Invalid email format").required("Required"),
+		email: Yup.string()
+        .email("Invalid email format")
+        .required("Required")
+        .matches(/^[\w-\.]+@iitkgp\.ac\.in$/, "Email must be from iitkgp.ac.in domain"), 
+    
 		password: Yup.string()
-			.min(6, "Password too short")
+			.min(8, "Password too short")
 			.required("Required"),
 		confirmPassword: Yup.string()
 			.oneOf([Yup.ref("password")], "Passwords must match")
 			.required("Required"),
 		age: Yup.number().required("Required"),
-		PhoneNo: Yup.number().required("Required"),
+		PhoneNo: Yup.string()  
+        .length(10, "Phone number must be exactly 10 digits")  
+        .matches(/^\d+$/, "Phone number must be digits only")  
+        .required("Required"),
 		year: Yup.number().required("Required"),
 		hall: Yup.string().required("Required"),
-		rollNo: Yup.string().required("Required"),
+		rollNo: Yup.string()
+        .length(9, "Roll number must be exactly 9 characters")  
+        .required("Required"),
 		gender: Yup.string().required("Required"),
 		bio: Yup.string().required("Required"),
 		profileImage1: Yup.string().required("Required"),
@@ -87,9 +96,9 @@ const SignUp = () => {
 	  if(error.response && error.response.status === 409){
 		createToast("Email Already Exist","error")
 	  }else if (error.response && error.response.status === 408){
-		createToast("Phone Number Already Exist","error")
+		createToast("Phone Number or Roll Number Already Exist","error")
 	  }else if (error.response && error.response.status === 407	){
-		createToast("Roll Number Already Exist","success")
+		createToast("Roll Number  or Phone No Already Exist","success")
 	  } else 
       createToast(error, "error")
       console.error(error);

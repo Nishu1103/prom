@@ -166,7 +166,9 @@ const Swipe = () => {
 				/>
 
 				<div className="user-info">
-					<h2 style={{ color: "#433878" }}>{currentUser.name}</h2>
+					<h2 style={{ color: "#433878",
+						marginBottom: "2px"
+					 }}>{currentUser.name}</h2>
 					<h3>{currentUser.bio}</h3>
 				</div>
 				<div className="action-buttons">

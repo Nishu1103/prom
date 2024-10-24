@@ -14,9 +14,10 @@
     /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
     border-radius: 10px;
     text-align: center;
-    padding: 20px;
+    padding: 10px;
     top: -8%;
     position: relative;
+    background: linear-gradient(to bottom, #433878, #7E60BF);
 }
 
 .user-image {
